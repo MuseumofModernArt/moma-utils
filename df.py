@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import httplib2, os, subprocess, re, urllib
+import httplib2, os, re, urllib
 from bs4 import BeautifulSoup, SoupStrainer
 
 http = httplib2.Http()
