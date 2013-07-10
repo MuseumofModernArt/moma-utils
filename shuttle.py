@@ -3,11 +3,11 @@
 import bagit, sys, datetime, time, argparse
 
 '''
-step 1: env variable A is the path to the materials on the source drive
-		env variable B is the destination
-		env variable C is the "name" of the transfer
-step 2: make dir at env variable B --or-- if no env variable B, then on ~/Desktop that is date/timestamp + name of volume + "name"
-step 3: move entire contents of env variable A to env variable B
+step 1: argv  A is the path to the materials on the source drive
+		argv  B is the destination
+		argv  C is the "name" of the transfer
+step 2: make dir at argv variable B --or-- if no argv B, then on ~/Desktop that is date/timestamp + name of volume + "name"
+step 3: move entire contents of argv A to argv B
 step 4: bagit
 step 5: 
 '''
