@@ -30,7 +30,7 @@ orighashes = []
 for line in open(fullpath+"/manifest-md5.txt"):
     column = line.split("  ")
     baghashes.append(column[0])
-# print baghashes
+
 ## calculate md5 for files on original media
 for path, subdirs, files in os.walk(args.input):
 	for name in files:
@@ -39,9 +39,8 @@ for path, subdirs, files in os.walk(args.input):
 		f = open(origpath)
 		data = f.read()
 		thishash.update(data)
-		# print name + " = " +thishash.hexdigest()
 		orighashes.append(thishash.hexdigest())
-# print orighashes
+
 
 def comp(list1, list2):
     for val in list1:
