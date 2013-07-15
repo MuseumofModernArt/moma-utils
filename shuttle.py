@@ -18,11 +18,9 @@ if not os.path.exists(fullpath):
 	os.makedirs(fullpath)
 	print "Made "+fullpath+" directory."
 
-
 subprocess.call(["rsync", "-a", "--partial", args.input, fullpath])
 
 bagit.make_bag(fullpath, {'Contact-Name': 'Ben Fino-Radin'})
-
 
 ## read md5 into dictionary
 baghashes = []
@@ -40,7 +38,6 @@ for path, subdirs, files in os.walk(args.input):
 		data = f.read()
 		thishash.update(data)
 		orighashes.append(thishash.hexdigest())
-
 
 def comp(list1, list2):
     for val in list1:
