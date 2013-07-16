@@ -8,10 +8,11 @@ timestamp = datetime.datetime.fromtimestamp(epoch).strftime('%Y-%m-%d_%H:%M:%S')
 parser = argparse.ArgumentParser(description="Python tool for ingest from shuttle hard drives at MoMA")
 parser.add_argument('-i', '--input', type=str, required=True, help='The full path to the materials on the shuttle drive you wish to transfer.')
 parser.add_argument('-o', '--output', type=str, default='~/Desktop/', help='Location you wish to store the bagged transfer. Defaults to desktop if not specified')
-parser.add_argument('-n', '--name', type=str, default='untitled_shuttledrive_transfer', help='Name of the transfer. This is optional.')
+parser.add_argument('-n', '--name', type=str, help='Name of the person operating the script. This ends up the Bag metadata')
+parser.add_argument('-t', '--title', type=str, default='untitled_shuttledrive_transfer', help='Name of the transfer. This is optional.')
 args = parser.parse_args()
 
-dirname = timestamp+'__'+args.name
+dirname = timestamp+'__'+args.title
 fullpath = os.path.expanduser(os.path.normpath(args.output) + os.sep)+dirname
 
 if not os.path.exists(fullpath):
@@ -20,7 +21,7 @@ if not os.path.exists(fullpath):
 
 subprocess.call(["rsync", "-a", "--partial", args.input, fullpath])
 
-bagit.make_bag(fullpath, {'Contact-Name': 'Ben Fino-Radin'})
+bagit.make_bag(fullpath, {'Contact-Name': args.name})
 
 ## read md5 into dictionary
 baghashes = []
