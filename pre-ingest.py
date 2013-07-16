@@ -19,10 +19,13 @@ if not os.path.exists(fullpath):
 	os.makedirs(fullpath)
 	print "Made "+fullpath+" directory."
 
+print "copying file(s)"
 subprocess.call(["rsync", "-a", "--partial", args.input, fullpath])
 
+print "File(s) copied... bagging local copy..."
 bagit.make_bag(fullpath, {'Contact-Name': args.name})
 
+print "Files bagged... comparing bag checksums with original source media."
 ## read md5 into dictionary
 baghashes = []
 orighashes = []
