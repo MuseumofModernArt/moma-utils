@@ -18,4 +18,4 @@ Arguments
 
 Output
 ------------------
-Bags are named with the following convention `YYYY-MM-DD_HH:MM:SS__name_of_transfer`
+Bags are named with the following convention `YYYY-MM-DD_HH:MM:SS__title_of_transfer`
