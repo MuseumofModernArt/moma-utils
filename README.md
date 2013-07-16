@@ -12,7 +12,8 @@ Arguments
 ------------------
   - `-i, --input` (required) Full path of the source directory or file
   - `-o, --output` (optional) Full path of the destination. Defaults to Desktop.
-  - `-n, --name` (optional) Title of the transfer.
+  - `-t, --title` (optional) Title of the transfer.
+  - `-n, --name` (optional) Name of the person operating the script. This winds up in the Bag's metadata
 
 
 Output
