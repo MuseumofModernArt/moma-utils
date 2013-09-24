@@ -14,6 +14,19 @@ parser.add_argument('-t', '--title', type=str, default='untitled_shuttledrive_tr
 args = parser.parse_args()
 
 
+objectid = args.accessionid
+req = json.load(urllib2.urlopen("http://vmsqlsvcs.museum.moma.org/TMSAPI/TmsObjectSvc/TmsObjects.svc/GetTombstoneDataRest/Object/"+objectid))
+artistname = req["GetTombstoneDataRestResult"]["DisplayName"]
+worktitle = req["GetTombstoneDataRestResult"]["Title"]
+objectnum = req["GetTombstoneDataRestResult"]["ObjectNumber"]
+objectid = req["GetTombstoneDataRestResult"]["ObjectID"]
+verbatim = artistname+"---"+worktitle+"---"+objectnum+"---"+objectid
+sanitized = verbatim.replace (" ", "_")
+
+# dirname = timestamp+'__'+args.title
+dirname = sanitized
+fullpath = os.path.expanduser(os.path.normpath(args.output) + os.sep)+dirname
+
 
 def comp(list1, list2):
 	for val in list1:
@@ -66,21 +79,12 @@ def hash_that():
 			orighashes.append(thishash)
 	if comp (baghashes, orighashes) == False:
 		print "Something went wrong. There is a mismatch between the bag hashes and hashes of the files on the original storage media."
+		print "Baghashes: "
+		print baghashes
+		print "Hashlib hashes of orig files: "
+		print orighashes
 	else:
 		print "hashes match!"
-
-objectid = args.accessionid
-req = json.load(urllib2.urlopen("http://vmsqlsvcs.museum.moma.org/TMSAPI/TmsObjectSvc/TmsObjects.svc/GetTombstoneDataRest/Object/"+objectid))
-artistname = req["GetTombstoneDataRestResult"]["DisplayName"]
-worktitle = req["GetTombstoneDataRestResult"]["Title"]
-objectnum = req["GetTombstoneDataRestResult"]["ObjectNumber"]
-objectid = req["GetTombstoneDataRestResult"]["ObjectID"]
-verbatim = artistname+"---"+worktitle+"---"+objectnum+"---"+objectid
-sanitized = verbatim.replace (" ", "_")
-
-# dirname = timestamp+'__'+args.title
-dirname = sanitized
-fullpath = os.path.expanduser(os.path.normpath(args.output) + os.sep)+dirname
 
 
 if not os.path.exists(fullpath):
