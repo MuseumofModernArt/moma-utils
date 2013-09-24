@@ -10,7 +10,9 @@ todo: add exception for inability to resolve connection to TMS
 Command Line Usage
 ------------------
 
-    python pre-ingest.py -i /Volumes/source-drive/source-directory -n "name of transfer"
+    python pre-ingest.py -i /Volumes/source-drive/source-directory -n "name of transfer" -id 930.2012
+
+Used internally on the MoMA network, this would result in the transfer of the files, and a bag named "Will_Wright---SimCity_2000---930.2012---152406"
   
 Arguments
 ------------------
