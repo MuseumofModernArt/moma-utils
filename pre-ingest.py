@@ -7,20 +7,22 @@ timestamp = datetime.datetime.fromtimestamp(epoch).strftime('%Y-%m-%d_%H:%M:%S')
 
 parser = argparse.ArgumentParser(description="Python tool for ingest from shuttle hard drives at MoMA")
 parser.add_argument('-i', '--input', type=str, required=True, help='The full path to the materials on the shuttle drive you wish to transfer.')
-parser.add_argument('-id', '--accessionid', type=str, required=True, help='objectid of the work.')
+parser.add_argument('-id', '--objectid', type=str, required=True, help='objectid of the work.')
 parser.add_argument('-o', '--output', type=str, default='~/Desktop/', help='Location you wish to store the bagged transfer. Defaults to desktop if not specified')
 parser.add_argument('-n', '--name', type=str, help='Name of the person operating the script. This ends up the Bag metadata')
 parser.add_argument('-t', '--title', type=str, default='untitled_shuttledrive_transfer', help='Name of the transfer. This is optional.')
 args = parser.parse_args()
 
 
-objectid = args.accessionid
+objectid = args.objectid
 req = json.load(urllib2.urlopen("http://vmsqlsvcs.museum.moma.org/TMSAPI/TmsObjectSvc/TmsObjects.svc/GetTombstoneDataRest/Object/"+objectid))
 artistname = req["GetTombstoneDataRestResult"]["DisplayName"]
 worktitle = req["GetTombstoneDataRestResult"]["Title"]
 objectnum = req["GetTombstoneDataRestResult"]["ObjectNumber"]
 objectid = req["GetTombstoneDataRestResult"]["ObjectID"]
-verbatim = artistname+"---"+worktitle+"---"+objectnum+"---"+objectid
+verbatim = "{}---{}---{}---{}".format(artistname, worktitle, objectnum, objectid)
+print verbatim
+#verbatim = artistname+"---"+worktitle+"---"+objectnum+"---"+objectid # .format(artistname, worktitle, objectnum, objectid)
 sanitized = verbatim.replace (" ", "_")
 
 # dirname = timestamp+'__'+args.title
