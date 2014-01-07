@@ -15,11 +15,11 @@ args = parser.parse_args()
 
 
 objectid = args.objectid
-req = json.load(urllib2.urlopen("http://vmsqlsvcs.museum.moma.org/TMSAPI/TmsObjectSvc/TmsObjects.svc/GetTombstoneDataRest/Object/"+objectid))
-artistname = req["GetTombstoneDataRestResult"]["DisplayName"]
-worktitle = req["GetTombstoneDataRestResult"]["Title"]
-objectnum = req["GetTombstoneDataRestResult"]["ObjectNumber"]
-objectid = req["GetTombstoneDataRestResult"]["ObjectID"]
+req = json.load(urllib2.urlopen("http://vmsqlsvcs.museum.moma.org/TMSAPI/TmsObjectSvc/TmsObjects.svc/GetTombstoneDataRest/ObjectID/"+objectid))
+artistname = req["GetTombstoneDataRestIdResult"]["AlphaSort"]
+worktitle = req["GetTombstoneDataRestIdResult"]["Title"]
+objectnum = req["GetTombstoneDataRestIdResult"]["ObjectNumber"]
+objectid = req["GetTombstoneDataRestIdResult"]["ObjectID"]
 verbatim = "{}---{}---{}---{}".format(artistname, worktitle, objectnum, objectid)
 print verbatim
 #verbatim = artistname+"---"+worktitle+"---"+objectnum+"---"+objectid # .format(artistname, worktitle, objectnum, objectid)
