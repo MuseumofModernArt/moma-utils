@@ -62,7 +62,7 @@ def status():
 	print (""),
 
 def bag_that():
-	bagit.make_bag(fullpath, {'Contact-Name': args.name})
+	bagit.make_bag(fullpath, {'Contact-Name': args.name}, checksum = ['sha1'])
 
 
 def hash_that():
