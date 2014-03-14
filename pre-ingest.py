@@ -36,14 +36,14 @@ def comp(list1, list2):
 			return True
 	return False
 
-def md5_for_file(f, block_size=8192):
-	md5 = hashlib.md5()
+def sha1_for_file(f, block_size=8192):
+	sha1 = hashlib.sha1()
 	while True:
 		data = f.read(block_size)
 		if not data:
 			break
-		md5.update(data)
-	return md5.hexdigest()
+		sha1.update(data)
+	return sha1.hexdigest()
 
 def execute(command):
 	process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -69,7 +69,7 @@ def hash_that():
 	## read md5 into list
 	baghashes = []
 	orighashes = []
-	for line in open(fullpath+"/manifest-md5.txt"):
+	for line in open(fullpath+"/manifest-sha1.txt"):
 		column = line.split("  ")
 		baghashes.append(column[0])
 	
@@ -77,7 +77,7 @@ def hash_that():
 		for name in files:
 			origpath = os.path.join(path, name)
 			f = open(origpath)
-			thishash = md5_for_file(f)
+			thishash = sha1_for_file(f)
 			orighashes.append(thishash)
 	if comp (baghashes, orighashes) == False:
 		print "Something went wrong. There is a mismatch between the bag hashes and hashes of the files on the original storage media."
