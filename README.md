@@ -1,9 +1,7 @@
 copy / bag / validate
 ====================
 
-A utility for copying a specific file or directory from external media, converting the local copy to a Bag named according to repository standards (using MoMA's TMS API), valdating the BagIt generated MD5 checksums against Hashlib generated MD5s of the files on the original source media. Requires [bagit-python], and currently only works with MoMA's TMS API.
-
-todo: add exception for inability to resolve connection to TMS
+A utility for copying a specific file or directory from external media, converting the local copy to a Bag named according to repository standards (using MoMA's TMS API), valdating the BagIt generated SHA1 checksums against Hashlib calculated SHA1 of the files on the original source media. Requires [bagit-python], and currently only works with MoMA's TMS API.
 
 [bagit-python]: https://github.com/edsu/bagit
 
@@ -26,3 +24,5 @@ Arguments
 Output
 ------------------
 Bags are named with the following convention `YYYY-MM-DD_HH:MM:SS__title_of_transfer`
+
+todo: add exception for inability to resolve connection to TMS
