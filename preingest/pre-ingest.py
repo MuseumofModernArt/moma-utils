@@ -3,7 +3,7 @@
 import bagit, datetime, time, argparse, os, sys, subprocess, filecmp, hashlib, threading, json, urllib2
 
 epoch = time.time()
-timestamp = datetime.datetime.fromtimestamp(epoch).strftime('%Y-%m-%d_%H:%M:%S')
+timestamp = datetime.datetime.fromtimestamp(epoch).strftime('%H:%M:%S')
 
 parser = argparse.ArgumentParser(description="Python tool for ingest from shuttle hard drives at MoMA")
 parser.add_argument('-i', '--input', type=str, required=True, help='The full path to the materials on the shuttle drive you wish to transfer.')
@@ -19,12 +19,12 @@ artistname = req["GetTombstoneDataRestIdResult"]["AlphaSort"]
 worktitle = req["GetTombstoneDataRestIdResult"]["Title"]
 objectnum = req["GetTombstoneDataRestIdResult"]["ObjectNumber"]
 objectid = req["GetTombstoneDataRestIdResult"]["ObjectID"]
+year = req["GetTombstoneDataRestIdResult"]["Dated"]
 verbatim = "{}---{}---{}---{}".format(artistname, worktitle, objectnum, objectid)
 print verbatim
 #verbatim = artistname+"---"+worktitle+"---"+objectnum+"---"+objectid # .format(artistname, worktitle, objectnum, objectid)
 sanitized = verbatim.replace (" ", "_")
 
-# dirname = timestamp+'__'+args.title
 dirname = sanitized
 fullpath = os.path.expanduser(os.path.normpath(args.output) + os.sep)+dirname
 
@@ -50,7 +50,7 @@ def status():
 	print (""),
 
 def bag_that():
-	bagit.make_bag(fullpath, {'Contact-Name': args.name}, checksum = ['sha1'])
+	bagit.make_bag(fullpath, {'Contact-Name': args.name, 'Timestamp':timestamp}, checksum = ['sha1'])
 
 def hash_that():
 	baghashes = []
@@ -86,17 +86,25 @@ def hash_that():
 	else:
 		print "hashes match!"
 
-if not os.path.exists(fullpath):
-	os.makedirs(fullpath)
-	print "Made "+fullpath+" directory."
+print "-----------------------------------------------------------"
+print worktitle+" ("+year+") by "+artistname
+print "-----------------------------------------------------------"
+print "Does this look right? (y/n)"
+char = raw_input().lower()
+if char == "y":
+	if not os.path.exists(fullpath):
+		os.makedirs(fullpath)
+		print "Made "+fullpath+" directory."
 
-print "\n==========================\ncopying file(s) with rsync \n=========================="
-proc = subprocess.Popen(["rsync", "-avP", os.path.expanduser(os.path.normpath(args.input)), fullpath])
-proc.wait()
+	print "\n==========================\ncopying file(s) with rsync \n=========================="
+	proc = subprocess.Popen(["rsync", "-avP", os.path.expanduser(os.path.normpath(args.input)), fullpath])
+	proc.wait()
 
-print 'Bagging files....  ',
-bag_that()
-print '\b\b files bagged!'
+	print 'Bagging files....  ',
+	bag_that()
+	print '\b\b files bagged!'
 
-print 'Verifying hashes....  ',
-hash_that()
+	print 'Verifying hashes....  ',
+	hash_that()
+else:
+	print "ok I won't do anything in that case"
