@@ -13,7 +13,6 @@ parser.add_argument('-n', '--name', type=str, help='Name of the person operating
 parser.add_argument('-t', '--title', type=str, default='untitled_shuttledrive_transfer', help='Name of the transfer. This is optional.')
 args = parser.parse_args()
 
-
 objectid = args.objectid
 req = json.load(urllib2.urlopen("http://vmsqlsvcs.museum.moma.org/TMSAPI/TmsObjectSvc/TmsObjects.svc/GetTombstoneDataRest/ObjectID/"+objectid))
 artistname = req["GetTombstoneDataRestIdResult"]["AlphaSort"]
@@ -28,7 +27,6 @@ sanitized = verbatim.replace (" ", "_")
 # dirname = timestamp+'__'+args.title
 dirname = sanitized
 fullpath = os.path.expanduser(os.path.normpath(args.output) + os.sep)+dirname
-
 
 def comp(list1, list2):
 	for val in list1:
@@ -88,7 +86,6 @@ def hash_that():
 	else:
 		print "hashes match!"
 
-
 if not os.path.exists(fullpath):
 	os.makedirs(fullpath)
 	print "Made "+fullpath+" directory."
@@ -97,14 +94,9 @@ print "\n==========================\ncopying file(s) with rsync \n==============
 proc = subprocess.Popen(["rsync", "-avP", os.path.expanduser(os.path.normpath(args.input)), fullpath])
 proc.wait()
 
-
-
-
 print 'Bagging files....  ',
 bag_that()
 print '\b\b files bagged!'
 
 print 'Verifying hashes....  ',
 hash_that()
-
-
