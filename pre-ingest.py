@@ -72,13 +72,19 @@ def hash_that():
 	for line in open(fullpath+"/manifest-sha1.txt"):
 		column = line.split("  ")
 		baghashes.append(column[0])
-	
-	for path, subdirs, files in os.walk(args.input):
-		for name in files:
-			origpath = os.path.join(path, name)
-			f = open(origpath)
-			thishash = sha1_for_file(f)
-			orighashes.append(thishash)
+	if os.path.isdir(args.input):
+		for path, subdirs, files in os.walk(args.input):
+			for name in files:
+				origpath = os.path.join(path, name)
+				f = open(origpath)
+				thishash = sha1_for_file(f)
+				orighashes.append(thishash)
+	else:
+		# origpath = os.path.join(path, name)
+		f = open(args.input)
+		thishash = sha1_for_file(f)
+		orighashes.append(thishash)
+
 	if comp (baghashes, orighashes) == False:
 		print "Something went wrong. There is a mismatch between the bag hashes and hashes of the files on the original storage media."
 		print "Baghashes: "
