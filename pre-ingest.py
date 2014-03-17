@@ -48,30 +48,22 @@ def sha1_for_file(f, block_size=8192):
 def execute(command):
 	process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-
-class RepeatingTimer(threading._Timer):
-	def run(self):
-			while True:
-				self.finished.wait(self.interval)
-				if self.finished.is_set():
-					return
-				else:
-					self.function(*self.args, **self.kwargs)
-
 def status():
 	print (""),
 
 def bag_that():
 	bagit.make_bag(fullpath, {'Contact-Name': args.name}, checksum = ['sha1'])
 
-
 def hash_that():
-	## read md5 into list
 	baghashes = []
 	orighashes = []
+
+	# create list of checksums in bag
 	for line in open(fullpath+"/manifest-sha1.txt"):
 		column = line.split("  ")
 		baghashes.append(column[0])
+
+	# if input is a directory
 	if os.path.isdir(args.input):
 		for path, subdirs, files in os.walk(args.input):
 			for name in files:
@@ -79,12 +71,14 @@ def hash_that():
 				f = open(origpath)
 				thishash = sha1_for_file(f)
 				orighashes.append(thishash)
+
+	# if input is an individual file
 	else:
-		# origpath = os.path.join(path, name)
 		f = open(args.input)
 		thishash = sha1_for_file(f)
 		orighashes.append(thishash)
 
+	#compare list of hashes in bag with list of hashes calculated from original source
 	if comp (baghashes, orighashes) == False:
 		print "Something went wrong. There is a mismatch between the bag hashes and hashes of the files on the original storage media."
 		print "Baghashes: "
@@ -100,12 +94,9 @@ if not os.path.exists(fullpath):
 	print "Made "+fullpath+" directory."
 
 print "\n==========================\ncopying file(s) with rsync \n=========================="
-timer = RepeatingTimer(1.0, status)
-timer.daemon = True
-timer.start()
 proc = subprocess.Popen(["rsync", "-avP", os.path.expanduser(os.path.normpath(args.input)), fullpath])
 proc.wait()
-timer.cancel()
+
 
 
 
