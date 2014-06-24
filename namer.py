@@ -5,10 +5,13 @@
 import argparse, sys, json, urllib2
 
 
-parser = argparse.ArgumentParser(description="Python tool for ingest from shuttle hard drives at MoMA")
+parser = argparse.ArgumentParser(description="Python tool for getting the properly formated directory name for the DRMC")
 parser.add_argument('-id', '--objectid', type=str, help='objectid of the work.')
 parser.add_argument('-an', '--accessionnum', type=str, help='accession number of the work')
 args = parser.parse_args()
+
+if not (args.objectid or args.accessionnum):
+    parser.error('you did not specify a work')
 
 if args.objectid != None:
 	idnum = args.objectid
