@@ -1,23 +1,29 @@
 Directories excluded from report
-/Volumes/drmc/Collections_materials
-/Volumes/drmc/Collections_materials/Media_Performance_Art
-/Volumes/drmc/Collections_materials/Media_Performance_Art/Nakadate_Laurel_Oops_374_2009_128839
+
+x /Volumes/drmc/Collections_materials/Media_Performance_Art/Nakadate_Laurel_Oops_374_2009_128839
+
 /Volumes/drmc/Collections_materials/Media_Performance_Art/Media_Lounge_Staging
-/Volumes/drmc/Collections_materials/Media_Performance_Art/Nomura_Hitoshi_ageMF_F624_1_118208
-/Volumes/drmc/Collections_materials/Media_Performance_Art/Takekiyo_Hitoshi_Banana_760_1993_179161
-/Volumes/drmc/Collections_materials/Media_Performance_Art/moma_brus_qt_hd1080_24p_blackmagic_rgb_10bit_smpte
-/Volumes/drmc/Collections_materials/Media_Performance_Art/Geyer_Andrea---Insistence---
+
+x /Volumes/drmc/Collections_materials/Media_Performance_Art/Nomura_Hitoshi_ageMF_F624_1_118208
+x /Volumes/drmc/Collections_materials/Media_Performance_Art/Takekiyo_Hitoshi_Banana_760_1993_179161
+x /Volumes/drmc/Collections_materials/Media_Performance_Art/moma_brus_qt_hd1080_24p_blackmagic_rgb_10bit_smpte
+x /Volumes/drmc/Collections_materials/Media_Performance_Art/Geyer_Andrea---Insistence---
+
 /Volumes/drmc/Collections_materials/Media_Performance_Art/Cool_Marie---Paper_and_Table---
-/Volumes/drmc/Collections_materials/Media_Performance_Art/Pindell_Howardena_FreeWhite21_585_2008_179322
+
+x /Volumes/drmc/Collections_materials/Media_Performance_Art/Pindell_Howardena_FreeWhite21_585_2008_179322
+
 /Volumes/drmc/Collections_materials/Media_Performance_Art/Mosley_Joshua_Dread_1181_2007_a-f_110640
-/Volumes/drmc/Collections_materials/Media_Performance_Art/Nakai_Tsuneo_Tune_F610_1_118194
-/Volumes/drmc/Collections_materials/Media_Performance_Art/Geyer_Andrea---Criminal_Case---216.2013.a-f
-/Volumes/drmc/Collections_materials/Media_Performance_Art/Samaras_Lucas_EcdvsiastandViewers_203_2007_109145
-/Volumes/drmc/Collections_materials/Media_Performance_Art/Acconi_Vito---ThreeColumnsforAmerica_190_2007---109149
-/Volumes/drmc/Collections_materials/Media_Performance_Art/Rosler_Martha---Chile_on_the_Road_to_NAFTA,_Accompanied_by_the_National_Police-Band--601.2012---159808
-/Volumes/drmc/Collections_materials/Media_Performance_Art/Rosler_Martha---How_Do_We_Know_What_Home_Looks_Like?_The_Unite_d'Habitation_de_Le_Corbusier_at_Firminy--599.2012---159806
-/Volumes/drmc/Collections_materials/Media_Performance_Art/Rosler_Martha---Prototype_(God_Bless_America)--602.2012---159809
-/Volumes/drmc/Collections_materials/Media_Performance_Art/Rosler_Martha---Semiotics_of_the_Kitchen_An_Audition--603.2012---159810
+
+x /Volumes/drmc/Collections_materials/Media_Performance_Art/Nakai_Tsuneo_Tune_F610_1_118194
+x /Volumes/drmc/Collections_materials/Media_Performance_Art/Geyer_Andrea---Criminal_Case---216.2013.a-f
+x /Volumes/drmc/Collections_materials/Media_Performance_Art/Samaras_Lucas_EcdvsiastandViewers_203_2007_109145
+x /Volumes/drmc/Collections_materials/Media_Performance_Art/Acconi_Vito---ThreeColumnsforAmerica_190_2007---109149
+x /Volumes/drmc/Collections_materials/Media_Performance_Art/Rosler_Martha---Chile_on_the_Road_to_NAFTA,_Accompanied_by_the_National_Police-Band--601.2012---159808
+x /Volumes/drmc/Collections_materials/Media_Performance_Art/Rosler_Martha---How_Do_We_Know_What_Home_Looks_Like?_The_Unite_d'Habitation_de_Le_Corbusier_at_Firminy--599.2012---159806
+x /Volumes/drmc/Collections_materials/Media_Performance_Art/Rosler_Martha---Prototype_(God_Bless_America)--602.2012---159809
+x /Volumes/drmc/Collections_materials/Media_Performance_Art/Rosler_Martha---Semiotics_of_the_Kitchen_An_Audition--603.2012---159810
+
 /Volumes/drmc/Collections_materials/Media_Performance_Art/Qiu_Anxiong_TheNewBookofMountainsandSeasII_381_2010_135052
 /Volumes/drmc/Collections_materials/Media_Performance_Art/Rosler_Martha---Seattle_Hidden_Histories_1-11--598.2012---159805
 /Volumes/drmc/Collections_materials/Media_Performance_Art/VDB_Recent_Acquistions
