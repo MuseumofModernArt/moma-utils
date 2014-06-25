@@ -12,6 +12,12 @@ import csv
 import codecs
 import cStringIO
 
+from pyfiglet import Figlet
+f = Figlet(font='slant')
+print f.renderText('DRMC report generator')
+
+
+
 #setup
 drmc_path = "/Volumes/drmc/Collections_materials"
 regexp = re.compile('.*---.*---.*---.*')

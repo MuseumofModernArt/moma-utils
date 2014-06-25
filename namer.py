@@ -36,11 +36,11 @@ sanitized = verbatim.replace (" ", "_")
 sanitized = sanitized.translate(None, '()"/:,')
 sanitized = sanitized.replace ("__", "_")
 
-border = len(sanitized)
+border = len(sanitized.decode("utf-8"))
 border = border + 21
 
 print "-" * border
-print "Copied to clipboard: "+ sanitized
+print "Copied to clipboard: "+ sanitized.decode("utf-8")
 print "-" * border
 
-xerox.copy(sanitized)
+xerox.copy(sanitized.decode("utf-8"))
