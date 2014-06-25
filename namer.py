@@ -30,21 +30,13 @@ elif args.accessionnum != None:
 	objectid = req["GetTombstoneDataRestResult"]["ObjectID"]
 	year = req["GetTombstoneDataRestResult"]["Dated"]
 
-verbatim = "{}---{}---{}---{}".format(artistname, worktitle, objectnum, objectid)
+verbatim = "{}---{}---{}---{}".format(artistname.encode("utf-8"), worktitle.encode("utf-8"), objectnum, objectid)
 print verbatim
 #verbatim = artistname+"---"+worktitle+"---"+objectnum+"---"+objectid # .format(artistname, worktitle, objectnum, objectid)
 sanitized = verbatim.replace (" ", "_")
-
+sanitized = sanitized.translate(None, '()"/:,')
+sanitized = sanitized.replace ("__", "_")
 
 print "-----------------------------------------------------------"
-print worktitle+" ("+year+") by "+artistname
+print "Here is your directory name: "+ sanitized
 print "-----------------------------------------------------------"
-print "Does this look right? (y/n)"
-char = raw_input().lower()
-if char == "y":
-	print
-	print "-----------------------------------------------------------"
-	print "Here is your directory name: "+ sanitized
-	print "-----------------------------------------------------------"
-else:
-	print "OK. Try again, human."

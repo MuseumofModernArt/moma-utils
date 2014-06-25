@@ -136,7 +136,7 @@ writer = UnicodeWriter(final_report,quoting=csv.QUOTE_ALL)
 drmc_filesystem_ID_list = []
 tms_report_ID_list = []
 
-writer.writerow(["API and filesystem objectID", "TMS report objectID", "API and filesystem object number", "TMS report object number", "dept", "location on DRMC", "has files", "number of files", "has dg component", "component number"])
+writer.writerow(["API and filesystem objectID", "TMS report objectID", "API and filesystem object number", "TMS report object number", "Title", "Creator", "dept", "location on DRMC", "has files", "number of files", "has dg component", "component number"])
 
 skipped_dirs_log = open("drmc_dg_report_log.txt", "w")
 skipped_dirs_log.write("Directories excluded from report\n")
@@ -152,8 +152,8 @@ for info in filter_walk(drmc_path, depth=2):
             TMS_report = csv.reader(open(args.input,"rU"))
             print ("checking "+ drmc_obj_id),
             req = json.load(urllib2.urlopen("http://vmsqlsvcs.museum.moma.org/TMSAPI/TmsObjectSvc/TmsObjects.svc/GetTombstoneDataRest/ObjectID/"+drmc_obj_id))
-            # artistname = req["GetTombstoneDataRestIdResult"]["AlphaSort"]
-            # worktitle = req["GetTombstoneDataRestIdResult"]["Title"]
+            creator = req["GetTombstoneDataRestIdResult"]["AlphaSort"]
+            title = req["GetTombstoneDataRestIdResult"]["Title"]
             objectnum = req["GetTombstoneDataRestIdResult"]["ObjectNumber"]
             APIobjectid = req["GetTombstoneDataRestIdResult"]["ObjectID"]
             year = req["GetTombstoneDataRestIdResult"]["Dated"]
@@ -165,17 +165,17 @@ for info in filter_walk(drmc_path, depth=2):
             yes_rows = [row for row in TMS_report if row[13] == drmc_obj_id]
             for row in yes_rows:
                 if cleanedcount != 0:
-                    writer.writerow([drmc_obj_id, row[13], objectnum, row[5], dept, pwd, "Yes", cleanedcount, "Yes", row[6]])
+                    writer.writerow([drmc_obj_id, row[13], objectnum, row[5], title, creator, dept, pwd, "Yes", cleanedcount, "Yes", row[6]])
                     # print "Found component"
                     print
                 elif cleanedcount == 0:
-                    writer.writerow([drmc_obj_id, row[13], objectnum, row[5], dept, pwd, "No", cleanedcount, "Yes", row[6]])
+                    writer.writerow([drmc_obj_id, row[13], objectnum, row[5], title, creator, dept, pwd, "No", cleanedcount, "Yes", row[6]])
                     print
             if not yes_rows and cleanedcount != 0:
-                writer.writerow([drmc_obj_id, "", objectnum, "", dept, pwd, "Yes", cleanedcount, "No", ""])
+                writer.writerow([drmc_obj_id, "", objectnum, "", title, creator, dept, pwd, "Yes", cleanedcount, "No", ""])
                 print cleanedcount+" file(s) without corresponding TMS components     <----------------"
             elif not yes_rows and cleanedcount == 0:
-                writer.writerow([drmc_obj_id, "", objectnum, "", dept, pwd, "No", cleanedcount, "No", ""])
+                writer.writerow([drmc_obj_id, "", objectnum, "", title, creator, dept, pwd, "No", cleanedcount, "No", ""])
                 print cleanedcount+" file(s) without corresponding TMS components     <----------------"
             drmc_filesystem_ID_list.append(drmc_obj_id)
         else:
@@ -208,13 +208,15 @@ for row in TMS_report:
         objectnum = req["GetTombstoneDataRestIdResult"]["ObjectNumber"]
         APIobjectid = req["GetTombstoneDataRestIdResult"]["ObjectID"]
         dept = req["GetTombstoneDataRestIdResult"]["Department"]
+        creator = req["GetTombstoneDataRestIdResult"]["AlphaSort"]
+        title = req["GetTombstoneDataRestIdResult"]["Title"]
 
         if objectid in drmc_filesystem_ID_list:
             print objectid +" has a DG and is the repository"
         else:
             print objectid +" has a DG but is not in the repository   <--------------"
             x = x + 1
-            writer.writerow(["n/a", objectid, "n/a", objectnum, dept, "n/a", "No", "0", "Yes", componentID])
+            writer.writerow(["n/a", objectid, "n/a", objectnum, title, creator, dept, "n/a", "No", "0", "Yes", componentID])
     else:
         print "error - object ID should not be blank, but for "+ objectnum +" it is. Should be here: "+ objectid
 
