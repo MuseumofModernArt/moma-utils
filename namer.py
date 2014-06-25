@@ -2,7 +2,7 @@
 
 # provides directory named according to MoMA DRMC standards
 
-import argparse, sys, json, urllib2
+import argparse, sys, json, urllib2, xerox
 
 
 parser = argparse.ArgumentParser(description="Python tool for getting the properly formated directory name for the DRMC")
@@ -31,12 +31,16 @@ elif args.accessionnum != None:
 	year = req["GetTombstoneDataRestResult"]["Dated"]
 
 verbatim = "{}---{}---{}---{}".format(artistname.encode("utf-8"), worktitle.encode("utf-8"), objectnum, objectid)
-print verbatim
 #verbatim = artistname+"---"+worktitle+"---"+objectnum+"---"+objectid # .format(artistname, worktitle, objectnum, objectid)
 sanitized = verbatim.replace (" ", "_")
 sanitized = sanitized.translate(None, '()"/:,')
 sanitized = sanitized.replace ("__", "_")
 
-print "-----------------------------------------------------------"
-print "Here is your directory name: "+ sanitized
-print "-----------------------------------------------------------"
+border = len(sanitized)
+border = border + 21
+
+print "-" * border
+print "Copied to clipboard: "+ sanitized
+print "-" * border
+
+xerox.copy(sanitized)
