@@ -164,6 +164,10 @@ for info in filter_walk(drmc_path, depth=2):
             APIobjectid = req["GetTombstoneDataRestIdResult"]["ObjectID"]
             year = req["GetTombstoneDataRestIdResult"]["Dated"]
             dept = req["GetTombstoneDataRestIdResult"]["Department"]
+            if creator == None:
+                creator = ""
+            if title == None:
+                title == ""
             print (" / "+ objectnum +"... "),
             recursivefind = subprocess.Popen(["find", pwd, "-type", "f", "-not", "-path", "*/\.*"], stdout=subprocess.PIPE)
             countfiles = subprocess.check_output(["wc", "-l"], stdin=recursivefind.stdout)
@@ -222,7 +226,7 @@ for row in TMS_report:
         else:
             print objectid +" has a DG but is not in the repository   <--------------"
             x = x + 1
-            writer.writerow(["n/a", objectid, "n/a", objectnum, title, creator, dept, "n/a", "No", "0", "Yes", componentID])
+            writer.writerow(["", objectid, "", objectnum, title, creator, dept, "", "No", "0", "Yes", componentID])
     else:
         print "error - object ID should not be blank, but for "+ objectnum +" it is. Should be here: "+ objectid
 
