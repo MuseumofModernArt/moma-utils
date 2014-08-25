@@ -14,7 +14,7 @@ def walklevel(some_dir, level=1):
             del dirs[:]
 
 # change this to the artwork directory
-targetdir = '/Volumes/drmc/Collections_materials/Artwork_level_AIPs/signer'
+targetdir = '/path/to/artwork/folder'
 
 dirobject = walklevel(targetdir)
 for x in dirobject:
