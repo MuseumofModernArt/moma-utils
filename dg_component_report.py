@@ -137,6 +137,9 @@ def filter_walk(top, file_pattern=None, dir_pattern=None, depth=None, onerror=No
 
 # has_dg = "No"
 final_report = open("drmc_dg_report.csv", "wb")
+
+
+
 writer = UnicodeWriter(final_report,quoting=csv.QUOTE_ALL)
 
 drmc_filesystem_ID_list = []
