@@ -14,32 +14,42 @@ def walklevel(some_dir, level=1):
             del dirs[:]
 
 # change this to the artwork directory
-targetdir = '/path/to/artwork/folder'
+targetdir = '/Volumes/drmc/Collections_materials/pre-ingest_staging/_run_component_script'
 
 dirobject = walklevel(targetdir)
-for x in dirobject:
-	if len(x[1]) == 1:
+skip_target = iter(dirobject)
+next(skip_target)
 
-		drmc_obj_id = re.sub('.*---.*---.*---', '', x[0])
-		print "Components for "+drmc_obj_id
-		req = json.load(urllib2.urlopen("http://vmsqlsvcs.museum.moma.org/TMSAPI/TmsObjectSvc/TmsObjects.svc/GetTombstoneDataRest/ObjectID/"+drmc_obj_id))
-		artistname = req["GetTombstoneDataRestIdResult"]["AlphaSort"]
-		worktitle = req["GetTombstoneDataRestIdResult"]["Title"]
-		objectnum = req["GetTombstoneDataRestIdResult"]["ObjectNumber"]
-		objectid = req["GetTombstoneDataRestIdResult"]["ObjectID"]
-		year = req["GetTombstoneDataRestIdResult"]["Dated"]
-		components = req["GetTombstoneDataRestIdResult"]["Components"]
+for x in skip_target:
+	drmc_obj_id = re.sub('.*---.*---.*---', '', x[0])
+	print x[0]
+	req = json.load(urllib2.urlopen("http://vmsqlsvcs.museum.moma.org/TMSAPI/TmsObjectSvc/TmsObjects.svc/GetTombstoneDataRest/ObjectID/"+drmc_obj_id))
+	artistname = req["GetTombstoneDataRestIdResult"]["AlphaSort"]
+	worktitle = req["GetTombstoneDataRestIdResult"]["Title"]
+	objectnum = req["GetTombstoneDataRestIdResult"]["ObjectNumber"]
+	objectid = req["GetTombstoneDataRestIdResult"]["ObjectID"]
+	year = req["GetTombstoneDataRestIdResult"]["Dated"]
+	components = req["GetTombstoneDataRestIdResult"]["Components"]
 
-		components_dict = json.loads(components)
+	components_dict = json.loads(components)
 
-		currentname = x[1]
-		component_dir = currentname[0]
-
-		for y in components_dict:
-			for key, value in y.iteritems():
-				if y["ComponentNumber"] == component_dir:
-					print y["ComponentID"]
-					print y["ComponentNumber"]
-					newdirname = currentname[0]+"---"+str(y["ComponentID"])+"---"+str(drmc_obj_id)
-		print newdirname
-		os.rename(join(x[0],currentname[0]),join(x[0],newdirname))
+	dirlist = x[1]
+	component_dir = dirlist[0]
+	z = 0
+	for y in components_dict:
+		# print "looking for "+str(y)
+		for q in dirlist:
+			# print "checking "+ q
+			# print "z = "+str(z)
+			if y["ComponentNumber"] == q:
+				print "Matched component ID "+str(y["ComponentID"])+" for component "+ str(y["ComponentNumber"])
+				newdirname = q+"---"+str(y["ComponentID"])+"---"+str(drmc_obj_id)
+				print "oldname = "+ join(x[0],q)
+				print "newname = "+ join(x[0],newdirname)
+				print
+				os.rename(join(x[0],q),join(x[0],newdirname))
+			# else:
+			# 	print "no dirs for that component"
+			# 	print
+		z = z + 1
+	print
