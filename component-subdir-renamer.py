@@ -14,7 +14,7 @@ def walklevel(some_dir, level=1):
             del dirs[:]
 
 # change this to the artwork directory
-targetdir = '/Volumes/drmc/Collections_materials/pre-ingest_staging/_run_component_script'
+targetdir = '/Volumes/drmc/Collections_materials/pre-ingest_staging'
 
 dirobject = walklevel(targetdir)
 skip_target = iter(dirobject)
