@@ -13,8 +13,8 @@ def walklevel(some_dir, level=1):
         if num_sep + level <= num_sep_this:
             del dirs[:]
 
-# change this to the artwork directory
-targetdir = '/Volumes/drmc/Collections_materials/pre-ingest_staging'
+# pre-ingest staging dir -- make sure this is right
+targetdir = '/Volumes/drmc/Collections_materials/pre-ingest_staging/_run_component_script'
 
 dirobject = walklevel(targetdir)
 skip_target = iter(dirobject)
