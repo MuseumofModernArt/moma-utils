@@ -13,8 +13,6 @@ if not (args.input):
 
 log = args.input
 
-x = 0
-y = 0
 start_time = 0
 stop_time = 0
 trans_dict = dict()
@@ -48,7 +46,6 @@ for line in log:
 		if start_match:
 			start_time = start()[0]
 			start_idno = start()[1]
-			x = x+1
 			# add idno to dictionary as key, add starttime as value 1
 			trans_dict[start_idno] = [start_time,]
 			continue
@@ -63,7 +60,6 @@ for line in log:
 			if trans_dict.has_key(stop_idno):
 				trans_dict[stop_idno].append(stop_time)
 				trans_dict[stop_idno].append(uuid)
-				y = y+1
 			continue
 
 for key in trans_dict:
@@ -75,14 +71,6 @@ for key in trans_dict:
 		print "AIP UUID: "+uuid
 		print "AIP Name: "+key
 		print "Is this size: "+AIPsize
-		# duration = float(trans_dict[key][1])-float(trans_dict[key][0])
 		duration = trans_dict[key][1]-trans_dict[key][0]
 		print "Took this long: "+str(duration)+"\n"
 
-			
-# print str(x)+" starts"
-# print str(y)+" stops"
-# print trans_dict
-		
-		
-		# print finish_time - start_time
