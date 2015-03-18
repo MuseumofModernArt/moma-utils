@@ -59,7 +59,7 @@ for line in log:
 		message = match.group(3)
 		
 		# find when new candidates are set
-		start_match = re.match(r'.*New transfer candidates: set\((.*/.*)\)', message)
+		start_match = re.match(r".*New transfer candidates: set\((\['.*/.*\])\)", message)
 		if start_match:
 			start_time = start()[0]
 			start_idno = start()[1]
