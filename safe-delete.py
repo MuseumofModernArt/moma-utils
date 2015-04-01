@@ -4,21 +4,26 @@ from requests.exceptions import HTTPError
 import sqlite3 as lite
 import sys, argparse, requests, getpass, csv
 
-
 # The purpose of this script is to provide a report of what transfers
 # have been sucsesfully processed by Archivematica's automation-tools,
 # so that the original source of the transfer may be deleted since the
 # materials are safely packaged and stored in an AIP.
 #
 # This mission is accomplished by looking at the sqlite database
-# maintained by Archivematica's automation-tools, and talk to
+# maintained by Archivematica's automation-tools, and talking to
 # the Binder API in order to ensure that if automation-tools says
 # it has processed an AIP, that this AIP has actually been 100%
-# sucsesfully processed and is tracked in Binder.
+# sucsesfully processed and is tracked in Binder. The script produces
+# a CSV report of all transfer sources that can be safely deleted.
 # 
-# This is necesary because if an automated transfer fails at any
-# point in the workflow (for instance, normalization, or AIP storage),
-# automation-tools is ignorant of this fact.
+# A second CSV is produced and lists the AIPs that Binder is ignorant
+# of, and also lists the transfer "status", which in most cases
+# will be "failed" or "rejected".
+#
+# I am considering having the script remove the rows in the sqlite db
+# for the failed transfers, so that these transfers will be automatically
+# retried in the future. I am holding off on this step until I devise
+# a long term plan for the tool's logging and output format...
 
 parser = argparse.ArgumentParser(description="Python tool for auditing Automation-Tool's database and making sure AIP is stored and tracked in Binder")
 parser.add_argument('-i', '--input', type=str, help='sqlite database to read')
@@ -40,12 +45,17 @@ reingest_count = 0
 csvfile = open('delete_me.csv', 'wb')
 writer = csv.writer(csvfile)
 writer.writerow(['AIP uuid', 'original transfer path'])
+redofile = open('reingest_me.csv', 'wb')
+reingestwriter = csv.writer(redofile)
+reingestwriter.writerow(['AIP uuid', 'original transfer path', 'status', 'microservice'])
 
 # row headers are
 # id, uuid, path, unit_type, status, microservice, current
 for row in c.execute('SELECT * FROM unit where unit_type = "ingest"'):
 	uuid = row[1]
 	path = row[2]
+	status = row[4]
+	microservice = row[5]
 	username = args.username
 	auth = (username, password)
 	url = "http://drmc.museum.moma.org/api/aips/"+uuid
@@ -60,7 +70,7 @@ for row in c.execute('SELECT * FROM unit where unit_type = "ingest"'):
 		print ('Could not find in Binder', r.url,'\n')
 		reingest_count = reingest_count+1
 		# write row in anothercsv with UUID
-		# delete this row from sqliteDB
+		reingestwriter.writerow([uuid, path, status, microservice])
 print (str(deletion_count)+" transfer sources that can be deleted")
 print (str(reingest_count)+" transfers that need to be re-ingested")
 
