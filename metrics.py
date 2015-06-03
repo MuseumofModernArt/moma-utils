@@ -69,4 +69,11 @@ print "Ready for ingest (automation): {}".format(len(readyForIngest))
 #######
 ####### this second loop is to look through the database, and see if anything in the database is no longer in the directory
 #######
-# 
+# for row in metrics.pre-ingest
+# 	ObjID = first row
+#	search dirDict for ObjID
+#	if ObjID is not in dirDict
+# 		update row[disappeared on] with current date
+#
+#
+# in theory those two loops should be all that is needed... I think.
