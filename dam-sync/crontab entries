@@ -1,0 +1,5 @@
+these are the two crontab entries for 5am asset sync, and noon metadata sync
+
+
+#0 5 * * * bash /home/archivesuser/dam_sync.sh
+#0 12 * * * bash /home/archivesuser/dam_sync_csv.sh
