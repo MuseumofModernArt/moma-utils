@@ -22,4 +22,4 @@ with open('out.csv', 'wb') as out_f:
 				out.writerow(row)
 
 os.remove(csv_path)
-os.rename('out.csv', 'metadata.csv')
+os.rename('out.csv', csv_path)
