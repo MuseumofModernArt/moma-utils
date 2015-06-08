@@ -24,3 +24,4 @@ with open('out.csv', 'wb') as out_f:
 
 os.remove(csv_path)
 shutil.copy('out.csv', '/home/archivesuser/drmc_dam_bulk/CSV/metadata.csv')
+os.remove('out.csv')
