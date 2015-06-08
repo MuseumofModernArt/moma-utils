@@ -1,5 +1,6 @@
 import csv
 import os
+import shutil
 from cStringIO import StringIO
 
 ## variables
@@ -22,4 +23,4 @@ with open('out.csv', 'wb') as out_f:
 				out.writerow(row)
 
 os.remove(csv_path)
-os.rename('out.csv', csv_path)
+shutil.copy('out.csv', '/home/archivesuser/drmc_dam_bulk/CSV/metadata.csv')
