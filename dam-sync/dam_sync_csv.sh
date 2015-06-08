@@ -9,7 +9,8 @@ clear
 echo "syncing DAM CSV..." >> $LOGFILE
 
 cp /home/archivesuser/drmc_dam_bulk/CSV/metadata.csv /home/archivesuser/drmc_dam_bulk/csvbackups/$(date -d "today" +"%Y%m%d%H%M").metadata.csv
-mv /home/archivesuser/drmc_dam_bulk/CSV/metadata.csv /home/archivesuser/dam_watched_sync
+# mv /home/archivesuser/drmc_dam_bulk/CSV/metadata.csv /home/archivesuser/dam_watched_sync
+mv /home/archivesuser/drmc_dam_bulk/CSV/metadata.csv /home/archivesuser/drmc_dam_bulk/staging/CSV
 
 echo "listing CSV watch folder after mv"
 

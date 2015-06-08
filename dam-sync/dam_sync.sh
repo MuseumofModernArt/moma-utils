@@ -4,7 +4,9 @@ clear
 
 echo "syncing DAM files..."
 
-mv /home/archivesuser/drmc_dam_bulk/Assets/* /home/archivesuser/dam_watched_sync/WatchFolder
+# mv /home/archivesuser/drmc_dam_bulk/Assets/* /home/archivesuser/dam_watched_sync/WatchFolder
+
+mv /home/archivesuser/drmc_dam_bulk/Assets/* /home/archivesuser/drmc_dam_bulk/staging/Assets
 
 echo "done"
 
