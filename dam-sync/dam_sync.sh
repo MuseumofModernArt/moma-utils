@@ -2,11 +2,13 @@
 
 clear
 
+echo "running python script for removal of bad files"
+
+python dam_cleanup.py
+
 echo "syncing DAM files..."
 
-# mv /home/archivesuser/drmc_dam_bulk/Assets/* /home/archivesuser/dam_watched_sync/WatchFolder
-
-mv /home/archivesuser/drmc_dam_bulk/Assets/* /home/archivesuser/drmc_dam_bulk/staging/Assets
+mv /home/archivesuser/drmc_dam_bulk/Assets/* /home/archivesuser/home/archivesuser/dam02_watch
 
 echo "done"
 
