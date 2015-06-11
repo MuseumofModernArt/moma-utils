@@ -8,7 +8,7 @@ python dam_cleanup.py
 
 echo "syncing DAM files..."
 
-mv /home/archivesuser/drmc_dam_bulk/Assets/* /home/archivesuser/home/archivesuser/dam02_watch
+mv /home/archivesuser/drmc_dam_bulk/Assets/* /home/archivesuser/dam02_watch
 
 echo "done"
 
