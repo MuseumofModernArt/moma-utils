@@ -25,7 +25,7 @@ for location in locations_dict:
 # table 2: runComponent
 # table 3: readyForIngest
 # table 4: artworkBacklog
-# table 5: counts
+# table 5: counting
 #
 # The structure of tables 1-4 is:
 # +--------+----------------------------------------------+-------------+----------------+
@@ -52,20 +52,18 @@ for location in locations_dict:
 # | F2013.43  | Little Flags                | 30 days    | 5 days        | 10 days          |
 # +-----------+-----------------------------+------------+---------------+------------------+
 #
-# Here is some pseudo code for filling in metrics.pre-ingest (same logic for run-component and ready-for-ingest)...
-# List pre-ingest dir with one level of recursion --- put results in a dictionary called dirDict
-#
-# in theory those two loops should be all that is needed... I think.
 
 i = datetime.datetime.now()
 now = i.isoformat()
 
 #######
-####### this first loop is to add any newly appeared directories to the database, and log the present date as the "appeared on" date
+####### this first function is to add any newly appeared directories to the database, and log the present date as the "appeared on" date
 ####### 
 def dbSync(location):
+	a = 0
+	b = 0
 	artworklist = locations_dict[location][2]
-	for artwork in artworklist: ######  <-----------------------------------this is currently hard-coded... need to think about how to make it iterate through a list of the locations
+	for artwork in artworklist:
 		objectID = re.sub('.*---.*---.*---', '', artwork)
 		if objectID != "" and len(objectID) < 10:
 		# these conditions mitigate parsing errors for cases when the object ID is missing from the folder name
@@ -74,27 +72,69 @@ def dbSync(location):
 			query = c.execute("SELECT * FROM {0} WHERE ObjID = '{1}' ;".format(location,objectID))
 			one = c.fetchone()
 			if one != None:
-				print "{0} is already in the {1} DB".format(one,location)
+				# print "{0} is already in the {1} DB".format(one,location)
+				a = a+1
 			else:
-				print "{0} will be added to the {1} table".format(objectID,location)
+				# print "{0} will be added to the {1} table".format(objectID,location)
+				b = b+1
 				c.execute("INSERT INTO "+location+" VALUES (?,?,?,'')",(objectID,buffer(artwork),now))
 				conn.commit()
 				conn.close()
+	print "{0} folders that are already tracked in the {1} DB".format(a, location)
+	print "{0} folders that have been added to the {1} DB".format(b, location)
+
+
+#######
+####### this second function is to look through the database, and see if anything in the database is no longer in the directory -- if so, log the date
+#######
+def checkForMoves(location):
+	a = 0
+	b = 0
+	artworklist = locations_dict[location][2]
+	conn = sqlite3.connect('metrics.db')
+	c = conn.cursor()
+	query = c.execute("SELECT * FROM {0}".format(location))
+	for row in query:
+		objectID = row[0]
+		templist = []
+		for artwork in artworklist:
+			artworkObjectID = re.sub('.*---.*---.*---', '', artwork)
+			if artworkObjectID != "" and len(artworkObjectID) < 10:
+				templist.append(int(artworkObjectID))
+		if objectID in templist:
+			# print "{0} is in the {1} table and still in the {2} dir".format(objectID,location,locations_dict[location][0])
+			a = a+1
+		else:
+			# print "something has disappeared from the {0} dir".format(locations_dict[location][0])
+			c.execute("UPDATE "+location+" SET disappearedOn=(?) WHERE ObjID=(?)",(now,objectID))
+			b = b+1
+	print "{} folders have not moved".format(a)
+	print "{} folders have disappeared".format(b)
+	conn.commit()
+	conn.close()
+
+def updateCounts():
+	i = datetime.datetime.now().date()
+	updatedate = i.isoformat()
+	print "{} is the date".format(updatedate)
+	conn = sqlite3.connect('metrics.db')
+	c = conn.cursor()
+
+	query = c.execute("SELECT * FROM counting WHERE Date=(?)",(updatedate,))
+	one = c.fetchone()
+	print "result is: {}".format(one)
+	if one == None:
+		print "Logging counts for today..."
+		c.execute("INSERT INTO counting VALUES (?,'','','','')",(updatedate,))
+		for location in locations_dict:
+			c.execute("UPDATE counting SET "+location+"=(?) WHERE Date=(?)",(locations_dict[location][1],updatedate))
+		conn.commit()
+		conn.close()
+	else:
+		print "Already an entry for today"
 
 for location in locations_dict:
 	print 'moving on to %s table' % location
 	dbSync(location)
-
-#######
-####### this second loop is to look through the database, and see if anything in the database is no longer in the directory
-#######
-# for row in metrics.pre-ingest
-# 	ObjID = first row
-#	search dirDict for ObjID
-#	if ObjID is not in dirDict
-# 		update row[disappeared on] with current date
-#
-
-
-
-
+	checkForMoves(location)
+updateCounts()
