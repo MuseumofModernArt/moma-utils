@@ -1,21 +1,9 @@
-#!/usr/bin/tmux source-file
+#!/bin/sh
 
-new-session -d
-split-window -d -t 0 -v
-split-window -d -t 0 -h
-split-window -d -t 0 -v
-split-window -d -t 2 -v
-
-send-keys -t 0 'htop' enter
-
-send-keys -t 1 'htop' enter C-l
-
-send-keys -t 2 'htop' enter
-
-send-keys -t 3 'htop' enter
-
-## Just a convenience shell
-send-keys -t 4 'htop' enter C-l
-select-pane -t 4
-
-attach
+tmux new-session -d -s foo 'htop'
+tmux rename-window 'Foo'
+tmux select-window -t foo:0
+tmux split-window -h 'man emacs'
+tmux split-window -v -t 0 ''
+tmux split-window -v -t 1 ''
+tmux -2 attach-session -t foo
