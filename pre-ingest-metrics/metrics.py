@@ -4,8 +4,6 @@ import os
 import datetime
 import re
 import sqlite3
-import urllib
-import json
 
 # this bit is for getting the basic counts of the directories
 def get_immediate_subdirectories(a_dir):
@@ -140,10 +138,6 @@ def updateCounts():
 			c.execute("UPDATE counting SET "+location+"=(?) WHERE Date=(?)",(locations_dict[location][1],updatedate))
 		conn.commit()
 		conn.close()
-	url = "http://drmc.museum.moma.org/api/informationobjects/works"
-	response = urllib.urlopen(url)
-	data = json.loads(response.read())
-	print data['total']
 
 for location in locations_dict:
 	print 'moving on to %s table' % location
