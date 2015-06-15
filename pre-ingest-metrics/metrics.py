@@ -69,7 +69,7 @@ def dbSync(location):
 		objectID = re.sub('.*---.*---.*---', '', artwork)
 		if objectID != "" and len(objectID) < 10:
 		# these conditions mitigate parsing errors for cases when the object ID is missing from the folder name
-			conn = sqlite3.connect('metrics.db')
+			conn = sqlite3.connect('/var/www/automation-audit/metrics.db')
 			c = conn.cursor()
 			query = c.execute("SELECT * FROM {0} WHERE ObjID = '{1}' ;".format(location,objectID))
 			one = c.fetchone()
@@ -93,7 +93,7 @@ def checkForMoves(location):
 	a = 0
 	b = 0
 	artworklist = locations_dict[location][2]
-	conn = sqlite3.connect('metrics.db')
+	conn = sqlite3.connect('/var/www/automation-audit/metrics.db')
 	c = conn.cursor()
 	query = c.execute("SELECT * FROM {0}".format(location))
 	for row in query:
@@ -119,7 +119,7 @@ def updateCounts():
 	i = datetime.datetime.now().date()
 	updatedate = i.isoformat()
 	print "{} is the date".format(updatedate)
-	conn = sqlite3.connect('metrics.db')
+	conn = sqlite3.connect('/var/www/automation-audit/metrics.db')
 	c = conn.cursor()
 
 	query = c.execute("SELECT * FROM counting WHERE Date=(?)",(updatedate,))
