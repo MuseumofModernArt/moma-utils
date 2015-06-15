@@ -133,7 +133,9 @@ def updateCounts():
 		conn.commit()
 		conn.close()
 	else:
-		print "Already an entry for today"
+		print "Already an entry for today - let's update those numbers"
+		for location in locations_dict:
+			c.execute("UPDATE counting SET "+location+"=(?) WHERE Date=(?)",(locations_dict[location][1],updatedate))
 
 for location in locations_dict:
 	print 'moving on to %s table' % location
