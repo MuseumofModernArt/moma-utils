@@ -11,7 +11,7 @@ def get_immediate_subdirectories(a_dir):
             if os.path.isdir(os.path.join(a_dir, name))]
 
 base_path = '/home/archivesuser/moma/drmc/'
-locations_dict = {'preIngest':['pre-ingest_staging','',['']], 'runComponent':['pre-ingest_staging/_run_component_script','',['']], 'readyForIngest':['ready_for_ingest','',['']], 'artworkBacklog':['Artwork_level_backlog','',['']]}
+locations_dict = {'preIngest':['pre-ingest_staging','',['']], 'readyForIngest':['ready_for_ingest','',['']], 'artworkBacklog':['Artwork_level_backlog','',['']]}
 
 for location in locations_dict:
 	fullpath = base_path+locations_dict[location][0]
