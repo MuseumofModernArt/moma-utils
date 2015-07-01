@@ -5,19 +5,28 @@ import datetime
 import re
 import sqlite3
 
-# this bit is for getting the basic counts of the directories
+# this function returns a count of the immediate subdirectories as an integer
 def get_immediate_subdirectories(a_dir):
     return [name for name in os.listdir(a_dir)
             if os.path.isdir(os.path.join(a_dir, name))]
 
+# the base bath of the DRMC as it is mounted on VMDRMC02
 base_path = '/home/archivesuser/moma/drmc/'
-locations_dict = {'preIngest':['pre-ingest_staging','',['']], 'readyForIngest':['ready_for_ingest','',['']], 'artworkBacklog':['Artwork_level_backlog','',['']]}
 
+# a dictionary of the workflow containing a nested data structure: the values are 1)directory name 2)placeholder for count of directories 3)placeholder list array of artwork folder names
+locations_dict = {'preIngest':['pre-ingest_staging','',['']], 'readyForIngest':['ready_for_ingest','',['']], 'artworkBacklog':['Artwork_level_backlog','',['']],'mpaBacklog':['Artwork_level_backlog/_MPA','',['']]}
+
+# for each location in the above dictionary
 for location in locations_dict:
+	#assemble the full path
 	fullpath = base_path+locations_dict[location][0]
+	#set this in the dictionary
 	locations_dict[location][0] = fullpath
+	#get the immediate subdirectories
 	fullpath_listing = get_immediate_subdirectories(fullpath)
+	#put them in the dictionary
 	locations_dict[location][2] = fullpath_listing
+	# count the length
 	fullpath_size = len(fullpath_listing)
 	locations_dict[location][1] = fullpath_size
 	print locations_dict[location][1]
