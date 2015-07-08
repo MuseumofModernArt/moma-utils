@@ -111,7 +111,7 @@ def checkForMoves(location):
 		templist = []
 		for artwork in artworklist:
 			artworkObjectID = re.sub('.*---.*---.*---', '', artwork)
-			if artworkObjectID != "" and len(artworkObjectID) < 10 and len(artworkObjectID) > 4:
+			if artworkObjectID != "" and len(artworkObjectID) < 10 and objectID.isdigit():
 				templist.append(int(artworkObjectID))
 		if objectID in templist:
 			# print "{0} is in the {1} table and still in the {2} dir".format(objectID,location,locations_dict[location][0])
