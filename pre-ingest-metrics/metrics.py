@@ -12,7 +12,7 @@ def get_immediate_subdirectories(a_dir):
 
 # the base bath of the DRMC as it is mounted on VMDRMC02
 base_path_1 = '/home/archivesuser/moma/drmc/'
-based_path_2 = '/mnt/pre-ingest/'
+base_path_2 = '/mnt/pre-ingest/'
 
 # a dictionary of the workflow containing a nested data structure: the values are 1)directory name 2)placeholder for count of directories 3)placeholder list array of artwork folder names
 locations_dict = {'preIngest':[base_path_1+'pre-ingest_staging','',['']], 'readyForIngest':[base_path_1+'ready_for_ingest','',['']], 'artworkBacklog':[base_path_1+'Artwork_level_backlog','',['']],'mpaBacklog':[base_path_1+'Artwork_level_backlog/_MPA','',['']], 'preIngestIsilon':[base_path_2+'staging','',['']]}
