@@ -11,15 +11,16 @@ def get_immediate_subdirectories(a_dir):
             if os.path.isdir(os.path.join(a_dir, name))]
 
 # the base bath of the DRMC as it is mounted on VMDRMC02
-base_path = '/home/archivesuser/moma/drmc/'
+base_path_1 = '/home/archivesuser/moma/drmc/'
+based_path_2 = '/mnt/pre-ingest/'
 
 # a dictionary of the workflow containing a nested data structure: the values are 1)directory name 2)placeholder for count of directories 3)placeholder list array of artwork folder names
-locations_dict = {'preIngest':['pre-ingest_staging','',['']], 'readyForIngest':['ready_for_ingest','',['']], 'artworkBacklog':['Artwork_level_backlog','',['']],'mpaBacklog':['Artwork_level_backlog/_MPA','',['']]}
+locations_dict = {'preIngest':[base_path_1+'pre-ingest_staging','',['']], 'readyForIngest':[base_path_1+'ready_for_ingest','',['']], 'artworkBacklog':[base_path_1+'Artwork_level_backlog','',['']],'mpaBacklog':[base_path_1+'Artwork_level_backlog/_MPA','',['']], 'preIngestIsilon':[base_path_2+'staging','',['']]}
 
 # for each location in the above dictionary
 for location in locations_dict:
 	#assemble the full path
-	fullpath = base_path+locations_dict[location][0]
+	fullpath = locations_dict[location][0]
 	#set this in the dictionary
 	locations_dict[location][0] = fullpath
 	#get the immediate subdirectories
@@ -136,7 +137,7 @@ def updateCounts():
 	print "result is: {}".format(one)
 	if one == None:
 		print "Logging counts for today..."
-		c.execute("INSERT INTO counting VALUES (?,'','','','','')",(updatedate,))
+		c.execute("INSERT INTO counting VALUES (?,'','','','','','')",(updatedate,))
 		for location in locations_dict:
 			c.execute("UPDATE counting SET "+location+"=(?) WHERE Date=(?)",(locations_dict[location][1],updatedate))
 		conn.commit()
