@@ -77,7 +77,7 @@ def dbSync(location):
 	artworklist = locations_dict[location][2]
 	for artwork in artworklist:
 		objectID = re.sub('.*---.*---.*---', '', artwork)
-		if objectID != "" and len(objectID) < 10:
+		if objectID != "" and len(objectID) < 10 and len(objectID) > 5:
 		# these conditions mitigate parsing errors for cases when the object ID is missing from the folder name
 			conn = sqlite3.connect('/var/www/automation-audit/metrics.db')
 			c = conn.cursor()
