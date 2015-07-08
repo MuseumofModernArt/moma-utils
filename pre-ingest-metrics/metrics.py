@@ -77,7 +77,7 @@ def dbSync(location):
 	artworklist = locations_dict[location][2]
 	for artwork in artworklist:
 		objectID = re.sub('.*---.*---.*---', '', artwork)
-		if objectID != "" and len(objectID) < 10 and isinstance(objectID, int) = True:
+		if objectID != "" and len(objectID) < 10 and isinstance(objectID, int) == True:
 		# these conditions mitigate parsing errors for cases when the object ID is missing from the folder name
 			conn = sqlite3.connect('/var/www/automation-audit/metrics.db')
 			c = conn.cursor()
@@ -111,7 +111,7 @@ def checkForMoves(location):
 		templist = []
 		for artwork in artworklist:
 			artworkObjectID = re.sub('.*---.*---.*---', '', artwork)
-			if artworkObjectID != "" and len(artworkObjectID) < 10 and isinstance(artworkObjectID, int) = True:
+			if artworkObjectID != "" and len(artworkObjectID) < 10 and isinstance(artworkObjectID, int) == True:
 				templist.append(int(artworkObjectID))
 		if objectID in templist:
 			# print "{0} is in the {1} table and still in the {2} dir".format(objectID,location,locations_dict[location][0])
