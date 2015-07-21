@@ -15,7 +15,7 @@ base_path_1 = '/home/archivesuser/moma/drmc/'
 base_path_2 = '/mnt/pre-ingest/'
 
 # a dictionary of the workflow containing a nested data structure: the values are 1)directory name 2)placeholder for count of directories 3)placeholder list array of artwork folder names
-locations_dict = {'preIngest':[base_path_1+'pre-ingest_staging','',['']], 'readyForIngest':[base_path_1+'ready_for_ingest','',['']], 'artworkBacklog':[base_path_1+'Artwork_level_backlog','',['']],'mpaBacklog':[base_path_1+'Artwork_level_backlog/_MPA','',['']], 'preIngestIsilon':[base_path_2+'staging','',['']]}
+locations_dict = {'preIngest':[base_path_1+'pre-ingest_staging','',['']], 'readyForIngest':[base_path_1+'ready_for_ingest','',['']], 'readyForIngest2':[base_path_1+'ready_for_ingest_2','',['']], 'artworkBacklog':[base_path_1+'Artwork_level_backlog','',['']],'mpaBacklog':[base_path_1+'Artwork_level_backlog/_MPA','',['']], 'preIngestIsilon':[base_path_2+'staging','',['']]}
 
 # for each location in the above dictionary
 for location in locations_dict:
