@@ -137,7 +137,7 @@ def updateCounts():
 	print "result is: {}".format(one)
 	if one == None:
 		print "Logging counts for today..."
-		c.execute("INSERT INTO counting VALUES (?,'','','','','','')",(updatedate,))
+		c.execute("INSERT INTO counting VALUES (?,'','','','','','','')",(updatedate,))
 		for location in locations_dict:
 			c.execute("UPDATE counting SET "+location+"=(?) WHERE Date=(?)",(locations_dict[location][1],updatedate))
 		conn.commit()
