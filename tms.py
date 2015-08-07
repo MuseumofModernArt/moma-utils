@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
-import csv, argparse, urllib2, json, ast
+import csv, argparse, urllib2, json, ast, os
 
 parser = argparse.ArgumentParser(description="script for adding TMS metadata to a transfer, uses the Archivemitca metadata.csv format")
 parser.add_argument('-i', '--input', type=str, required=True, help='path to transfer you want to add metadata for.')
+parser.add_argument('-o', '--output', type=str, required=True, help='where to put csv')
 args = parser.parse_args()
 
 dirname = args.input
@@ -33,11 +34,17 @@ componentNumber = component_request["GetComponentDetailsResult"]["ComponentNumbe
 componentID = component_request["GetComponentDetailsResult"]["ComponentID"]
 Attributes = component_request["GetComponentDetailsResult"]["Attributes"]
 
+#initialize component variables
+componentStatus = ""
+componentFormat = ""
+
 Attributes = ast.literal_eval(Attributes)
 
 # look to see if the media label created date exists
-for start_item in Attributes:
-	item = ast.literal_eval(start_item)
+for item in Attributes:
+	# print start_item
+	# item = ast.parse(start_item, mode='eval')
+
 	try:
 		if item['Media Label'] == 'Created Date':
 			componentDate = item['Remarks']
@@ -50,14 +57,22 @@ for start_item in Attributes:
 	except KeyError:
 		print "nada"
 
-elementList = [dc_ident1, dc_ident2, dc_title, dc_creator, dc_date, dc_format1, dc_format2, componentName, componentNumber,
-				componentID, componentDate, componentChannels, componentCopyinSet, componentStatus, componentFormat]
 
-print elementList
 
-# find out what elements it has in TMS
-# write header of csv accordingly
+
+
+# it doesn't matter if the given component doesn't have all of the elements in the CSV header - they'll just be ommitted in the XML - not blank
+c = csv.writer(open(args.output, "wb"))
+c.writerow(["filename","dc.identifier","dc.identifier","dc.title","dc.creator","dc.date","dc.format","dc.format","componentName",
+			"componentNumber","componentID","createdDate","channels","copyInSet","status","relation","textEntry"])
+
 
 # for file in /data dir of transfer:
 # 	write filename
 # 	write elements
+
+for filename in os.listdir(args.input):
+	elementList = [filename,dc_ident1, dc_ident2, dc_title, dc_creator, dc_date, dc_format1, dc_format2, componentName, componentNumber,
+					componentID, componentDate, componentChannels, componentCopyinSet, componentStatus, componentFormat]
+
+	c.writerow(elementList)
