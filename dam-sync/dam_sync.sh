@@ -2,14 +2,16 @@
 
 clear
 
+echo "about to sync dam files... here is a list of pre-sanitized files"
+ls /home/archivesuser/drmc_dam_bulk/Assets/
 echo "running python script for removal of bad files"
-
-python dam_cleanup.py
+python /home/archivesuser/moma-utils/dam-sync/dam_cleanup.py
+echo "here is the cleaned up list"
+ls /home/archivesuser/drmc_dam_bulk/Assets/
 
 echo "syncing DAM files..."
 
 mv /home/archivesuser/drmc_dam_bulk/Assets/* /home/archivesuser/dam02_watch
 
-echo "done"
-
-mail -s "DRMC assets available" -t jennifer_sellar@moma.org, david_garfinkel@moma.org, ben_fino-radin@moma.org <<< "New DRMC assets have just been synced..."
+echo "done syncing files to DAM watched dir... here is the file listing of the DAM watched dir"
+ls /home/archivesuser/dam02_watch

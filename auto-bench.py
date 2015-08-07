@@ -45,7 +45,7 @@ def stop():
 
 def getMin(s):
 	l = str(s).split(':')
-	secs = int(l[0]) * 3600 + int(l[1]) * 60 + int(l[2])
+	secs = float(l[0]) * 3600 + float(l[1]) * 60 + float(l[2])
 	mins = secs/60
 	return mins
 
@@ -102,7 +102,7 @@ for key in trans_dict:
 			print 'Could not find in Binder', r.url,'\n'
 		else:
 			final_total=final_total+1
-			AIPsize = int(r.json()['size'])
+			AIPsize = float(r.json()['size'])
 			duration = trans_dict[key][1]-trans_dict[key][0]
 			durMin = getMin(duration)
 			avg = AIPsize/durMin

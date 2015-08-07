@@ -1,18 +1,37 @@
+<<<<<<< HEAD
 import os, datetime, re, sqlite3
+=======
+#!/usr/bin/env python
 
-# this bit is for getting the basic counts of the directories
+import os
+import datetime
+import re
+import sqlite3
+>>>>>>> origin/master
+
+# this function returns a count of the immediate subdirectories as an integer
 def get_immediate_subdirectories(a_dir):
     return [name for name in os.listdir(a_dir)
             if os.path.isdir(os.path.join(a_dir, name))]
 
-base_path = '/home/archivesuser/moma/drmc/'
-locations_dict = {'preIngest':['pre-ingest_staging','',['']], 'runComponent':['pre-ingest_staging/_run_component_script','',['']], 'readyForIngest':['ready_for_ingest','',['']], 'artworkBacklog':['Artwork_level_backlog','',['']]}
+# the base bath of the DRMC as it is mounted on VMDRMC02
+base_path_1 = '/home/archivesuser/moma/drmc/'
+base_path_2 = '/mnt/pre-ingest/'
 
+# a dictionary of the workflow containing a nested data structure: the values are 1)directory name 2)placeholder for count of directories 3)placeholder list array of artwork folder names
+locations_dict = {'preIngest':[base_path_1+'pre-ingest_staging','',['']], 'readyForIngest':[base_path_1+'ready_for_ingest','',['']], 'readyForIngest2':[base_path_1+'ready_for_ingest_2','',['']], 'artworkBacklog':[base_path_1+'Artwork_level_backlog','',['']],'mpaBacklog':[base_path_1+'Artwork_level_backlog/_MPA','',['']], 'preIngestIsilon':[base_path_2+'staging','',['']]}
+
+# for each location in the above dictionary
 for location in locations_dict:
-	fullpath = base_path+locations_dict[location][0]
+	#assemble the full path
+	fullpath = locations_dict[location][0]
+	#set this in the dictionary
 	locations_dict[location][0] = fullpath
+	#get the immediate subdirectories
 	fullpath_listing = get_immediate_subdirectories(fullpath)
+	#put them in the dictionary
 	locations_dict[location][2] = fullpath_listing
+	# count the length
 	fullpath_size = len(fullpath_listing)
 	locations_dict[location][1] = fullpath_size
 	print locations_dict[location][1]
@@ -62,9 +81,9 @@ def dbSync(location):
 	artworklist = locations_dict[location][2]
 	for artwork in artworklist:
 		objectID = re.sub('.*---.*---.*---', '', artwork)
-		if objectID != "" and len(objectID) < 10:
+		if objectID != "" and len(objectID) < 10 and isinstance(objectID, int) == True:
 		# these conditions mitigate parsing errors for cases when the object ID is missing from the folder name
-			conn = sqlite3.connect('metrics.db')
+			conn = sqlite3.connect('/var/www/automation-audit/metrics.db')
 			c = conn.cursor()
 			query = c.execute("SELECT * FROM {0} WHERE ObjID = '{1}' ;".format(location,objectID))
 			one = c.fetchone()
@@ -88,7 +107,7 @@ def checkForMoves(location):
 	a = 0
 	b = 0
 	artworklist = locations_dict[location][2]
-	conn = sqlite3.connect('metrics.db')
+	conn = sqlite3.connect('/var/www/automation-audit/metrics.db')
 	c = conn.cursor()
 	query = c.execute("SELECT * FROM {0}".format(location))
 	for row in query:
@@ -96,7 +115,7 @@ def checkForMoves(location):
 		templist = []
 		for artwork in artworklist:
 			artworkObjectID = re.sub('.*---.*---.*---', '', artwork)
-			if artworkObjectID != "" and len(artworkObjectID) < 10:
+			if artworkObjectID != "" and len(artworkObjectID) < 10 and isinstance(artworkObjectID, int) == True:
 				templist.append(int(artworkObjectID))
 		if objectID in templist:
 			# print "{0} is in the {1} table and still in the {2} dir".format(objectID,location,locations_dict[location][0])
@@ -114,7 +133,7 @@ def updateCounts():
 	i = datetime.datetime.now().date()
 	updatedate = i.isoformat()
 	print "{} is the date".format(updatedate)
-	conn = sqlite3.connect('metrics.db')
+	conn = sqlite3.connect('/var/www/automation-audit/metrics.db')
 	c = conn.cursor()
 
 	query = c.execute("SELECT * FROM counting WHERE Date=(?)",(updatedate,))
@@ -122,14 +141,22 @@ def updateCounts():
 	print "result is: {}".format(one)
 	if one == None:
 		print "Logging counts for today..."
-		c.execute("INSERT INTO counting VALUES (?,'','','','')",(updatedate,))
+		c.execute("INSERT INTO counting VALUES (?,'','','','','','','')",(updatedate,))
 		for location in locations_dict:
 			c.execute("UPDATE counting SET "+location+"=(?) WHERE Date=(?)",(locations_dict[location][1],updatedate))
 		conn.commit()
 		conn.close()
 	else:
+<<<<<<< HEAD
 		print "Updating today's entry"
 		c.execute("UPDATE counting SET "+location+"=(?) WHERE Date=(?)",(locations_dict[location][1],updatedate))
+=======
+		print "Already an entry for today - let's update those numbers"
+		for location in locations_dict:
+			c.execute("UPDATE counting SET "+location+"=(?) WHERE Date=(?)",(locations_dict[location][1],updatedate))
+		conn.commit()
+		conn.close()
+>>>>>>> origin/master
 
 for location in locations_dict:
 	print 'moving on to %s table' % location
