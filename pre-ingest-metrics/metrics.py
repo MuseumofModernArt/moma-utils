@@ -1,7 +1,4 @@
-import os
-import datetime
-import re
-import sqlite3
+import os, datetime, re, sqlite3
 
 # this bit is for getting the basic counts of the directories
 def get_immediate_subdirectories(a_dir):
@@ -131,7 +128,8 @@ def updateCounts():
 		conn.commit()
 		conn.close()
 	else:
-		print "Already an entry for today"
+		print "Updating today's entry"
+		c.execute("UPDATE counting SET "+location+"=(?) WHERE Date=(?)",(locations_dict[location][1],updatedate))
 
 for location in locations_dict:
 	print 'moving on to %s table' % location
