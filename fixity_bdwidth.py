@@ -35,16 +35,20 @@ with open(args.input, 'rb') as csvfile:
 			request = urllib2.Request("http://drmc.museum.moma.org/api/aips/"+uuid)
 			base64string = base64.encodestring('%s:%s' % (args.username, password)).replace('\n', '')
 			request.add_header("Authorization", "Basic %s" % base64string) 
-			result = urllib2.urlopen(request)
+			try:
+				result = urllib2.urlopen(request)
 
-			start_date = row[4]
-			end_date = row[5]
-			start_date_trimmed = start_date[:-10]
-			end_date_trimmed = end_date[:-10]
-			data = json.load(result)
-			size = data['size']
+				start_date = row[4]
+				end_date = row[5]
+				start_date_trimmed = start_date[:-10]
+				end_date_trimmed = end_date[:-10]
+				data = json.load(result)
+				size = data['size']
 
-			print start_date_trimmed, end_date_trimmed, size, uuid
+				print start_date_trimmed, end_date_trimmed, size, uuid
 
-			c.writerow([start_date_trimmed,end_date_trimmed,size,uuid])
+				c.writerow([start_date_trimmed,end_date_trimmed,size,uuid])
+			except urllib2.HTTPError, e:
+				print "Could not find AIP! Error code "
+				print e.args
 
