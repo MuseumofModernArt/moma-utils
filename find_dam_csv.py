@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import argparse, os, csv, subprocess
+import argparse, os, csv, subprocess, shlex
 
 # this is a script for locating the DAM / DRMC integration metadata
 
@@ -17,7 +17,7 @@ if not (args.search):
 
 firstline = True
 
-with open(args.input, 'rb') as csvfile:
+with open(args.input, 'rU') as csvfile:
 	c = csv.writer(open(args.output, "wb"))
 	c.writerow(["filename","ObjectID","Component Number", "dip_uuid"])
 	i = csv.reader(csvfile, delimiter=',')
@@ -26,12 +26,14 @@ with open(args.input, 'rb') as csvfile:
 			firstline = False
 			continue
 
-		print "checking "+ row[0]
-
-		p = subprocess.Popen(['grep', row[0], '*.csv'])
-
-
-
+		cmd = "grep -i '"+row[0]+"' "+args.search+"/*.csv"
+		p = subprocess.Popen(cmd,shell=True, stdout=subprocess.PIPE)
+		result = p.stdout.read()
+		if result != "":
+			result = result[result.index(':')+1:]
+			result = result.split(',')
+			print result
+			c.writerow(result)
 
 		
 		# if row[0] != "":
