@@ -17,7 +17,7 @@ def get_size(start_path = '.'):
             try:
                 fp = os.path.join(dirpath, f)
                 total_size += os.path.getsize(fp)
-                print f
+                print fp
             except OSError, e:
                 print e
     return total_size
