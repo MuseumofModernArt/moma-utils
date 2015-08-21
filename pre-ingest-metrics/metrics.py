@@ -42,6 +42,7 @@ for location in locations_dict:
 	fullpath_size = len(fullpath_listing)
 	locations_dict[location][1] = fullpath_size
 	# get the size
+	print get_size(location)
 	size = get_size(location)
 	locations_dict[location][3] = size
 	print size
