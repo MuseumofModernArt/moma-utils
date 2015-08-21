@@ -10,17 +10,6 @@ def get_immediate_subdirectories(a_dir):
     return [name for name in os.listdir(a_dir)
             if os.path.isdir(os.path.join(a_dir, name))]
 
-def get_size(start_path = '.'):
-    total_size = 0
-    for dirpath, dirnames, filenames in os.walk(start_path):
-        for f in filenames:
-            try:
-                fp = os.path.join(dirpath, f)
-                total_size += os.path.getsize(fp)
-                print fp
-            except OSError, e:
-                print e
-    return total_size
 
 # the base bath of the DRMC as it is mounted on VMDRMC02
 base_path_1 = '/home/archivesuser/moma/drmc/'
@@ -42,11 +31,6 @@ for location in locations_dict:
 	# count the length
 	fullpath_size = len(fullpath_listing)
 	locations_dict[location][1] = fullpath_size
-	# get the size
-	print get_size(fullpath)
-	size = get_size(fullpath)
-	locations_dict[location][3] = size
-	print size
 	# print locations_dict[location][1]
 
 # The sqlite DB called "metrics" has 6 tables
