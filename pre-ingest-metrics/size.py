@@ -22,7 +22,7 @@ base_path_1 = '/home/archivesuser/moma/drmc/'
 base_path_2 = '/mnt/pre-ingest/'
 
 # a dictionary of the workflow dirs and their sizes
-locations_dict = {'readyForIngest':[base_path_1+'ready_for_ingest',''], 'preIngest':[base_path_1+'pre-ingest_staging',''], 'readyForIngest2':[base_path_1+'ready_for_ingest_2',''], 'artworkBacklog':[base_path_1+'Artwork_level_backlog',''],'mpaBacklog':[base_path_1+'Artwork_level_backlog/_MPA',''], 'preIngestIsilon':[base_path_2+'staging','']}
+locations_dict = {'readyForIngest':[base_path_1+'ready_for_ingest',''], 'readyForIngest2':[base_path_1+'ready_for_ingest_2',''], 'artworkBacklog':[base_path_1+'Artwork_level_backlog',''],'mpaBacklog':[base_path_1+'Artwork_level_backlog/_MPA',''], 'preIngestIsilon':[base_path_2+'staging',''], 'preIngest':[base_path_1+'pre-ingest_staging','']}
 
 
 # for each location in the above dictionary
