@@ -10,12 +10,23 @@ def get_immediate_subdirectories(a_dir):
     return [name for name in os.listdir(a_dir)
             if os.path.isdir(os.path.join(a_dir, name))]
 
+def get_size(start_path = '.'):
+    total_size = 0
+    for dirpath, dirnames, filenames in os.walk(start_path):
+        for f in filenames:
+            try:
+                fp = os.path.join(dirpath, f)
+                total_size += os.path.getsize(fp)
+            except OSError, e:
+                print e
+    return total_size
+
 # the base bath of the DRMC as it is mounted on VMDRMC02
 base_path_1 = '/home/archivesuser/moma/drmc/'
 base_path_2 = '/mnt/pre-ingest/'
 
-# a dictionary of the workflow containing a nested data structure: the values are 1)directory name 2)placeholder for count of directories 3)placeholder list array of artwork folder names
-locations_dict = {'preIngest':[base_path_1+'pre-ingest_staging','',['']], 'readyForIngest':[base_path_1+'ready_for_ingest','',['']], 'readyForIngest2':[base_path_1+'ready_for_ingest_2','',['']], 'artworkBacklog':[base_path_1+'Artwork_level_backlog','',['']],'mpaBacklog':[base_path_1+'Artwork_level_backlog/_MPA','',['']], 'preIngestIsilon':[base_path_2+'staging','',['']]}
+# a dictionary of the workflow containing a nested data structure: the values are 1)directory name 2)placeholder for count of directories 3)placeholder list array of artwork folder names 4) placeholder for directory size in bytes
+locations_dict = {'preIngest':[base_path_1+'pre-ingest_staging','',[''],''], 'readyForIngest':[base_path_1+'ready_for_ingest','',[''],''], 'readyForIngest2':[base_path_1+'ready_for_ingest_2','',[''],''], 'artworkBacklog':[base_path_1+'Artwork_level_backlog','',[''],''],'mpaBacklog':[base_path_1+'Artwork_level_backlog/_MPA','',[''],''], 'preIngestIsilon':[base_path_2+'staging','',[''],'']}
 
 # for each location in the above dictionary
 for location in locations_dict:
@@ -30,14 +41,19 @@ for location in locations_dict:
 	# count the length
 	fullpath_size = len(fullpath_listing)
 	locations_dict[location][1] = fullpath_size
-	print locations_dict[location][1]
+	# get the size
+	size = get_size(location)
+	locations_dict[location][3] = size
+	print size
+	# print locations_dict[location][1]
 
-# The sqlite DB called "metrics" has 4 tables
+# The sqlite DB called "metrics" has 6 tables
 # table 1: preIngest
 # table 2: runComponent
 # table 3: readyForIngest
 # table 4: artworkBacklog
 # table 5: counting
+# table 6: size
 #
 # The structure of tables 1-4 is:
 # +--------+----------------------------------------------+-------------+----------------+
@@ -148,6 +164,9 @@ def updateCounts():
 			c.execute("UPDATE counting SET "+location+"=(?) WHERE Date=(?)",(locations_dict[location][1],updatedate))
 		conn.commit()
 		conn.close()
+
+
+
 
 for location in locations_dict:
 	print 'moving on to %s table' % location
