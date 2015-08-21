@@ -12,7 +12,7 @@ def get_size(start_path = '.'):
             try:
                 fp = os.path.join(dirpath, f)
                 total_size += os.path.getsize(fp)
-                print fp
+                print total_size+" bytes counted"+" ::::: "+fp
             except OSError, e:
                 print e
     return total_size
