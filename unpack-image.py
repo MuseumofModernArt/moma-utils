@@ -1,0 +1,1 @@
+# The purpose of this script is to unpack a disk image, and arrange it's contents into a specific directory structure, as definied by a supplied CSV file.
