@@ -10,6 +10,6 @@ tmux resize-pane -U 7
 tmux resize-pane -R 23
 tmux select-pane -t 1
 tmux split-window -v 'tail -f /var/log/archivematica/automate-transfer.log' #this will be second automation-tools log
-tmux select-pane -t 1 
+tmux select-pane -t 2 
 tmux split-window -v 'df -h'
 tmux -2 attach-session -t foo
