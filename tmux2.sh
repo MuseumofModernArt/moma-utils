@@ -3,7 +3,7 @@
 tmux new-session -d -s foo 'htop'
 tmux rename-window 'Foo'
 tmux select-window -t foo:0
-tmux split-window -v 'tail -f /var/log/archivematica/automate-transfer.log'
+tmux split-window -v 'watch -n1 echo "foo" && tail -f /var/log/archivematica/automate-transfer.log'
 #tmux resize-pane -U 7
 tmux split-window -h 'top'
 tmux resize-pane -U 10
