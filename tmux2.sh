@@ -6,6 +6,8 @@ tmux new-session -d -s foo 'htop'
 tmux rename-window 'Foo'
 tmux select-window -t foo:0
 tmux split-window -v 'tail -f /var/log/archivematica/automate-transfer.log'
+tmux select-pane -t 1
+tmux resize-pane -U 23
 tmux split-window -v 'man top'
 tmux split-window -v 'man hop'
 
