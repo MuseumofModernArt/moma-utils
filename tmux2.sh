@@ -11,7 +11,7 @@ tmux split-window -v 'man top'
 tmux resize-pane -U 28
 tmux split-window -v 'watch -n100 df -h'
 tmux resize-pane -U 22
-tmux split-window -v 'watch -n100 ls /var/log/archivematica/'
+tmux split-window -v "echo 'foo' && tail -f /var/log/archivematica/automate-transfer.log"
 tmux resize-pane -U 18
 tmux split-window -v 'watch -n100 ls /home/archivesuser'
 tmux select-pane -t 3
