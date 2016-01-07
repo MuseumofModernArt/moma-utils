@@ -5,13 +5,15 @@
 tmux new-session -d -s foo 'htop'
 tmux rename-window 'Foo'
 tmux select-window -t foo:0
+tmux set-window-option remain-on-exit on
 tmux split-window -v 'tail -f /var/log/archivematica/automate-transfer.log'
 tmux resize-pane -U 28
 tmux split-window -v 'man top'
 tmux resize-pane -U 28
 tmux split-window -v 'watch -n100 df -h'
 tmux resize-pane -U 22
-tmux split-window -v "echo 'foo' && tail -f /var/log/archivematica/automate-transfer.log"
+tmux split-window -v 'df -h'
+# tmux split-window -v "echo 'foo' && tail -f /var/log/archivematica/automate-transfer.log"
 tmux resize-pane -U 18
 tmux split-window -v 'watch -n100 ls /home/archivesuser'
 tmux select-pane -t 3
