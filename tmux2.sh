@@ -8,9 +8,9 @@ tmux select-window -t foo:0
 tmux split-window -v 'tail -f /var/log/archivematica/automate-transfer.log'
 tmux resize-pane -U 28
 tmux split-window -v 'man top'
-tmux resize-pane -U 15
+tmux resize-pane -U 25
 tmux split-window -v 'watch -n100 df -h'
-tmux resize-pane -U 15
+tmux resize-pane -U 25
 # tmux set -g pane-border-style fg=black
 # tmux set -g pane-active-border-style fg=black
 tmux -2 attach-session -t foo
