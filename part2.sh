@@ -1,3 +1,3 @@
 #!/bin/sh
 
-echo 'foo' && tail -f /var/log/archivematica/automate-transfer.log
+echo 'foooooooo000o00oooo'
