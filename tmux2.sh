@@ -10,9 +10,9 @@ tmux resize-pane -U 28
 tmux split-window -v 'man top'
 tmux resize-pane -U 5
 tmux split-window -v 'man hop'
-# tmux set -g pane-border-style fg=black
-# tmux set -g pane-active-border-style fg=black
-# tmux -2 attach-session -t foo
+tmux set -g pane-border-style fg=black
+tmux set -g pane-active-border-style fg=black
+tmux -2 attach-session -t foo
 
 
 
