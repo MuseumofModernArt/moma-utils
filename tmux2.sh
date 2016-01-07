@@ -16,10 +16,11 @@ tmux resize-pane -U 10
 tmux split-window -v 'watch -n100 ls /home/archivesuser'
 tmux select-pane -t 3
 tmux split-window -h 'watch -n100 ls /home/archivesuser'
-tmux resize-pane -L 20
+tmux resize-pane -L 25
 tmux select-pane -t 6
+tmux resize-pane -U 4
 tmux split-window -h 'watch -n100 ls /home/archivesuser/dam02'
-tmux resize-pane -R 25
+tmux resize-pane -R 26
 # tmux set -g pane-border-style fg=black
 # tmux set -g pane-active-border-style fg=black
 tmux -2 attach-session -t foo
