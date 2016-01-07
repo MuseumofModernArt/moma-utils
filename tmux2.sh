@@ -12,6 +12,7 @@ tmux resize-pane -U 28
 tmux split-window -v 'watch -n100 df -h'
 tmux resize-pane -U 22
 tmux split-window -v 'watch -n100 ls /var/log/archivematica/'
+tmux resize-pane -U 10
 # tmux set -g pane-border-style fg=black
 # tmux set -g pane-active-border-style fg=black
 tmux -2 attach-session -t foo
