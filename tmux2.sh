@@ -9,7 +9,7 @@ tmux split-window -v 'tail -f /var/log/archivematica/automate-transfer.log'
 tmux resize-pane -U 28
 tmux split-window -v 'man top'
 tmux resize-pane -U 15
-tmux split-window -v 'man hop'
+tmux split-window -v 'watch -n100 df -h'
 tmux resize-pane -U 15
 # tmux set -g pane-border-style fg=black
 # tmux set -g pane-active-border-style fg=black
