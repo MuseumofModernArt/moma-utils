@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+
+import argparse
+
+parser = argparse.ArgumentParser(description="script for making a bunch of random directories")
+parser.add_argument('-t', '--target', type=str, required=True, help='where to put folders')
+args = parser.parse_args()
+
+target = args.target
+
+x = 0
+
+while (x < 100):
