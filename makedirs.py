@@ -37,7 +37,8 @@ while (x <= args.reels):
 	# print "just made "+target+'/'+dirname
 	while (dpx_num <= args.files):
 		filename = target+'/'+dirname+'/'+dirname+'/'+dirname+str(dpx_num)+".dpx"
-		open(filename,'w')
+		with open(filename,'wb') as fout:
+			fout.write(os.urandom(12000000))
 		# print "writing"+filename
 		dpx_num += 1
 	dpx_num = 0001
