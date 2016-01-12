@@ -6,6 +6,7 @@ parser = argparse.ArgumentParser(description="script for making a bunch of direc
 parser.add_argument('-t', '--target', type=str, required=True, help='where to put the test data')
 parser.add_argument('-r', '--reels', type=int, required=True, help='how many "reels" to make')
 parser.add_argument('-f', '--files', type=int, required=True, help='how many files per reel')
+parser.add_argument('-fs', '--filesize', type=int, default='12000000', required=False, help='size of files in bytes. defaults to 12MB')
 args = parser.parse_args()
 
 def walklevel(some_dir, level=1):
@@ -31,19 +32,19 @@ while (x <= args.reels):
 	dirname = title+str(x)+sep+reel+sep+"scan"
 	if os.path.isdir(target+'/'+dirname):
 		shutil.rmtree(target+'/'+dirname)
-		# print "deleting "+target+'/'+dirname
+		# delete the dir if it exists already
 	os.mkdir(target+'/'+dirname)
 	os.mkdir(target+'/'+dirname+'/'+dirname)
-	# print "just made "+target+'/'+dirname
+	# make the dir
 	while (dpx_num <= args.files):
 		filename = target+'/'+dirname+'/'+dirname+'/'+dirname+str(dpx_num)+".dpx"
 		with open(filename,'wb') as fout:
-			fout.write(os.urandom(12000000))
-		# print "writing"+filename
+			fout.write(os.urandom(args.filesize))
+		# write the file
 		dpx_num += 1
 	dpx_num = 0001
 	x += 1
 
 for subdir, dirs, files in walklevel(target, 0):
 	for dir in dirs:
-		bag = bagit.make_bag(target+'/'+dir, {'Contact-Name': 'Ben Fino-Radin'})
+		bag = bagit.make_bag(target+'/'+dir)
