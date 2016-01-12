@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import argparse, os, shutil, subprocess, bagit
+import argparse, os, shutil, bagit
 
 parser = argparse.ArgumentParser(description="script for making a bunch of directories with a bunch of files in them")
 parser.add_argument('-t', '--target', type=str, required=True, help='where to put the test data')
