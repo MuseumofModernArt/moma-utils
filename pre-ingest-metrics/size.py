@@ -19,7 +19,7 @@ def get_size(start_path = '.'):
                 total_size += os.path.getsize(fp)
                 print str(total_size)+" bytes / "+str(size(total_size))+" counted"+" <------------ current position: "+start_path+" : "+f
                 for location in locations_dict:
-                    print str(location)+": "+str(locations_dict[location][1])
+                    print str(location)+": "+str(size(locations_dict[location][1]))
             except OSError, e:
                 print e
     return total_size
