@@ -6,6 +6,9 @@ import re
 import sqlite3
 from hurry.filesize import size
 
+i = datetime.datetime.now()
+now = i.isoformat()
+
 def get_size(start_path = '.'):
     total_size = 0
     for dirpath, dirnames, filenames in os.walk(start_path):
@@ -17,28 +20,6 @@ def get_size(start_path = '.'):
             except OSError, e:
                 print e
     return total_size
-
-# the base bath of the DRMC as it is mounted on VMDRMC02
-base_path_1 = '/home/archivesuser/moma/drmc/'
-base_path_2 = '/mnt/pre-ingest/'
-
-# a dictionary of the workflow dirs and their sizes
-locations_dict = {'readyForIngest':[base_path_1+'ready_for_ingest-unbagged',''], 'readyForIngest2':[base_path_1+'ready_for_ingest-bagged',''], 'artworkBacklog':[base_path_1+'Artwork_level_backlog',''],'mpaBacklog':[base_path_1+'Artwork_level_backlog/_MPA',''], 'preIngestIsilon':[base_path_2+'staging',''], 'preIngest':[base_path_1+'pre-ingest_staging','']}
-
-# for each location in the above dictionary
-for location in locations_dict:
-	#assemble the full path
-	fullpath = locations_dict[location][0]
-	#set this in the dictionary
-	locations_dict[location][0] = fullpath
-	# get the size
-	print get_size(fullpath)
-	filesize = get_size(fullpath)
-	locations_dict[location][1] = size
-	print filesize
-
-i = datetime.datetime.now()
-now = i.isoformat()
 
 def updateSize():
     i = datetime.datetime.now().date()
@@ -63,3 +44,23 @@ def updateSize():
             c.execute("UPDATE size SET "+location+"=(?) WHERE Date=(?)",(locations_dict[location][1],updatedate))
         conn.commit()
         conn.close()
+
+# the base bath of the DRMC as it is mounted on VMDRMC02
+base_path_1 = '/home/archivesuser/moma/drmc/'
+base_path_2 = '/mnt/pre-ingest/'
+
+# a dictionary of the workflow dirs and their sizes
+locations_dict = {'readyForIngest':[base_path_1+'ready_for_ingest-unbagged',''], 'readyForIngest2':[base_path_1+'ready_for_ingest-bagged',''], 'artworkBacklog':[base_path_1+'Artwork_level_backlog',''],'mpaBacklog':[base_path_1+'Artwork_level_backlog/_MPA',''], 'preIngestIsilon':[base_path_2+'staging',''], 'preIngest':[base_path_1+'pre-ingest_staging','']}
+
+# for each location in the above dictionary
+for location in locations_dict:
+	#assemble the full path
+	fullpath = locations_dict[location][0]
+	#set this in the dictionary
+	locations_dict[location][0] = fullpath
+	# get the size
+	filesize = get_size(fullpath)
+	locations_dict[location][1] = size
+updateSize()
+
+
