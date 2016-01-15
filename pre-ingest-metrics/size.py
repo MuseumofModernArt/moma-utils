@@ -5,6 +5,7 @@ import datetime
 import re
 import sqlite3
 from hurry.filesize import size
+from sys import stdout
 
 i = datetime.datetime.now()
 now = i.isoformat()
@@ -19,6 +20,7 @@ def get_size(start_path = '.'):
                 print str(total_size)+" bytes / "+str(size(total_size))+" counted"+" <------------ current position: "+start_path+" : "+f
                 for location in locations_dict:
                     print location+": "+locations_dict[location][1]
+                stdout.flush()
             except OSError, e:
                 print e
     return total_size
