@@ -60,7 +60,7 @@ for location in locations_dict:
 	locations_dict[location][0] = fullpath
 	# get the size
 	filesize = get_size(fullpath)
-	locations_dict[location][1] = size
+	locations_dict[location][1] = filesize
 updateSize()
 
 
