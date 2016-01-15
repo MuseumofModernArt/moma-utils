@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import argparse, os, shutil, bagit
+from hurry.filesize import size
 
 parser = argparse.ArgumentParser(description="script for making a bunch of directories with a bunch of files in them")
 parser.add_argument('-t', '--target', type=str, required=True, help='where to put the test data')
@@ -22,7 +23,8 @@ def walklevel(some_dir, level=1):
 target = args.target
 
 x = 1
-dpx_num = 0001
+dpx_num = 1
+filesize = 0
 
 title = "this_is_a_title_"
 reel = "reel_1_of_6"
@@ -38,11 +40,15 @@ while (x <= args.reels):
 	# make the dir
 	while (dpx_num <= args.files):
 		filename = target+'/'+dirname+'/'+dirname+'/'+dirname+str(dpx_num)+".dpx"
+		print "Dir "+str(x)+" of "+str(args.reels)+" ----- file "+str(dpx_num)+" of "+str(args.files)+" ----- total filesize: "+str(size(filesize))
 		with open(filename,'wb') as fout:
 			fout.write(os.urandom(args.filesize))
+		filesize += args.filesize
 		# write the file
 		dpx_num += 1
-	dpx_num = 0001
+	filesize += filesize
+	print filesize
+	dpx_num = 1
 	x += 1
 
 for subdir, dirs, files in walklevel(target, 0):

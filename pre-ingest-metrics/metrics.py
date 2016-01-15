@@ -16,7 +16,7 @@ base_path_1 = '/home/archivesuser/moma/drmc/'
 base_path_2 = '/mnt/pre-ingest/'
 
 # a dictionary of the workflow containing a nested data structure: the values are 1)directory name 2)placeholder for count of directories 3)placeholder list array of artwork folder names 4) placeholder for directory size in bytes
-locations_dict = {'preIngest':[base_path_1+'pre-ingest_staging','',[''],''], 'readyForIngest':[base_path_1+'ready_for_ingest','',[''],''], 'readyForIngest2':[base_path_1+'ready_for_ingest_2','',[''],''], 'artworkBacklog':[base_path_1+'Artwork_level_backlog','',[''],''],'mpaBacklog':[base_path_1+'Artwork_level_backlog/_MPA','',[''],''], 'preIngestIsilon':[base_path_2+'staging','',[''],'']}
+locations_dict = {'preIngest':[base_path_1+'pre-ingest_staging','',[''],''], 'readyForIngest':[base_path_1+'ready_for_ingest-bagged','',[''],''], 'readyForIngest2':[base_path_1+'ready_for_ingest-unbagged','',[''],''], 'artworkBacklog':[base_path_1+'Artwork_level_backlog','',[''],''], 'preIngestIsilon':[base_path_2+'staging','',[''],''], 'preIngestIsilon':[base_path_2+'ready_for_ingest','',[''],'']}
 
 # for each location in the above dictionary
 for location in locations_dict:
@@ -33,38 +33,17 @@ for location in locations_dict:
 	locations_dict[location][1] = fullpath_size
 	# print locations_dict[location][1]
 
-# The sqlite DB called "metrics" has 6 tables
-# table 1: preIngest
-# table 2: runComponent
-# table 3: readyForIngest
-# table 4: artworkBacklog
-# table 5: counting
-# table 6: size
+# The sqlite DB called "metrics" has 9 tables
 #
-# The structure of tables 1-4 is:
-# +--------+----------------------------------------------+-------------+----------------+
-# | ObjID  |                 folderName                   | appearedOn  | disappearedOn  |
-# +--------+----------------------------------------------+-------------+----------------+
-# | 169688 | Cohen_Jem---Little_Flags---F2013.43---169688 | 2015-01-05  | 2015-03-24     |
-# +--------+----------------------------------------------+-------------+----------------+
-#
-# The structure of table 5 is:
-# +------------+-----------------------+------------+---------------+------------------+--+
-# |    Date    |  artworkLevelBacklog  | preIngest  |  runComponent |  readyForIngest  |  |
-# +------------+-----------------------+------------+---------------+------------------+--+
-# | 2015-01-01 |                   350 |         70 |             0 |              500 |  |
-# | 2015-01-02 |                   350 |         70 |             0 |              500 |  |
-# | 2015-01-03 |                   348 |         73 |             0 |              502 |  |
-# | 2015-01-04 |                   330 |         80 |             2 |              538 |  |
-# +------------+-----------------------+------------+---------------+------------------+--+
-#
-# The output of the artwork level stats could look something like this
-# +-----------+-----------------------------+------------+---------------+------------------+
-# |  Obj num  |            Title            | pre-ingest | run-component | ready-for-ingest |
-# +-----------+-----------------------------+------------+---------------+------------------+
-# | 68.2015.1 | Wing House Helsinki Finland | 90 days    | 10 days       | 2 days           |
-# | F2013.43  | Little Flags                | 30 days    | 5 days        | 10 days          |
-# +-----------+-----------------------------+------------+---------------+------------------+
+# CREATE TABLE artworkBacklog (ObjID int, folderName text, appearedOn text, disappearedOn text);
+# CREATE TABLE counting (date text, preIngest int, runComponent int, readyForIngest int, artworkBacklog int, mpaBacklog int, preIngestIsilon int, readyForIngest2 int);
+# CREATE TABLE mpaBacklog (ObjID int, folderName text, appearedOn text, disappearedOn text);
+# CREATE TABLE preIngest (ObjID int, folderName text, appearedOn text, disappearedOn text);
+# CREATE TABLE preIngestIsilon (ObjID int, folderName text, appearedOn text, disappearedOn text);
+# CREATE TABLE readyForIngest (ObjID int, folderName text, appearedOn text, disappearedOn text);
+# CREATE TABLE readyForIngest2 (ObjID int, folderName text, appearedOn text, disappearedOn text);
+# CREATE TABLE runComponent (ObjID int, folderName text, appearedOn text, disappearedOn text);
+# CREATE TABLE size (date text, preIngest int, runComponent int, readyForIngest int, artworkBacklog int, mpaBacklog int, preIngestIsilon int, readyForIngest2 int);
 #
 
 i = datetime.datetime.now()
