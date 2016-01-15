@@ -4,6 +4,7 @@ import os
 import datetime
 import re
 import sqlite3
+from hurry.filesize import size
 
 def get_size(start_path = '.'):
     total_size = 0
@@ -12,7 +13,7 @@ def get_size(start_path = '.'):
             try:
                 fp = os.path.join(dirpath, f)
                 total_size += os.path.getsize(fp)
-                print str(total_size)+" bytes counted"+" ::::: current position: "+start_path+" // "+f
+                print str(size(total_size))+" bytes counted"+" ::::: current position: "+start_path+" // "+f
             except OSError, e:
                 print e
     return total_size
