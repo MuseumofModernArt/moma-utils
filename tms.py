@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
-import csv, argparse, urllib2, json, ast, os
+import csv, argparse, urllib2, json, ast, os, sys
 
 parser = argparse.ArgumentParser(description="script for adding TMS metadata to a transfer, uses the Archivemitca metadata.csv format")
 parser.add_argument('-i', '--input', type=str, required=True, help='path to transfer you want to add metadata for.')
 parser.add_argument('-o', '--output', type=str, required=True, help='where to put csv')
 args = parser.parse_args()
 
-dirname = args.input
+dirname = os.path.basename(os.path.normpath(args.input))
 objectID = dirname.split('---')[2]
 componentID = dirname.split('---')[1]
 
@@ -38,13 +38,21 @@ Attributes = component_request["GetComponentDetailsResult"]["Attributes"]
 componentStatus = ""
 componentFormat = ""
 
-Attributes = ast.literal_eval(Attributes)
+try:
+	Attributes = ast.literal_eval(Attributes)
+except SyntaxError:
+	print "Caught a SyntaxError: "+str(sys.exc_info())
+except ValueError:
+	print "Caught a ValueError: "+str(sys.exc_info())
+
+componentDate = ''
+componentChannels = ''
+componentCopyinSet = ''
 
 # look to see if the media label created date exists
 for item in Attributes:
 	# print start_item
 	# item = ast.parse(start_item, mode='eval')
-
 	try:
 		if item['Media Label'] == 'Created Date':
 			componentDate = item['Remarks']
@@ -71,7 +79,7 @@ c.writerow(["filename","dc.identifier","dc.identifier","dc.title","dc.creator","
 # 	write filename
 # 	write elements
 
-for filename in os.listdir(args.input):
+for filename in os.listdir(args.input+'/data'):
 	elementList = [filename,dc_ident1, dc_ident2, dc_title, dc_creator, dc_date, dc_format1, dc_format2, componentName, componentNumber,
 					componentID, componentDate, componentChannels, componentCopyinSet, componentStatus, componentFormat]
 
