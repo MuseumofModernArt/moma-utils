@@ -9,7 +9,7 @@ USAGE: python bag-rm.py -i [ path to dir you want to turn into a bag ]
 
 edit the rm_these list below to set what files you want excluded from your bag. They will be deleted.
 
-# DISCLAIMER: this script is in no way intended to be used for production use. I'm not responsible if you muck up your stuff.
+DISCLAIMER: this script is in no way intended to be used for production use. I'm not responsible if you muck up your stuff.
 
 '''
 
