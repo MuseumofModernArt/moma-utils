@@ -13,7 +13,7 @@ DISCLAIMER: this script is in no way intended to be used for production use. I'm
 
 '''
 
-rm_these = ['.DS_Store', 'Thumbs.db', 'foo']
+rm_these = ['.DS_Store', 'Thumbs.db']
 
 parser = argparse.ArgumentParser(description="Python tool for making BagIt bags, but excluding specific files")
 parser.add_argument('-i', '--input', type=str, required=True, help='The full path to what you want to bag')
