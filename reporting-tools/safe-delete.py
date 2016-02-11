@@ -4,13 +4,15 @@ from requests.exceptions import HTTPError
 import sqlite3 as lite
 import sys, argparse, requests, getpass, csv
 
+# This tool has been replaced by https://github.com/finoradin/automation-audit 
+#
 # The purpose of this script is to provide a report of what transfers
 # have been sucsesfully processed by Archivematica's automation-tools,
 # so that the original source of the transfer may be deleted since the
 # materials are safely packaged and stored in an AIP.
 #
-# This mission is accomplished by looking at the sqlite database
-# maintained by Archivematica's automation-tools, and talking to
+# This is accomplished by looking at the sqlite database
+# used by Archivematica's automation-tools, and talking to
 # the Binder API in order to ensure that if automation-tools says
 # it has processed an AIP, that this AIP has actually been 100%
 # sucsesfully processed and is tracked in Binder. The script produces
@@ -20,10 +22,7 @@ import sys, argparse, requests, getpass, csv
 # of, and also lists the transfer "status", which in most cases
 # will be "failed" or "rejected".
 #
-# I am considering having the script remove the rows in the sqlite db
-# for the failed transfers, so that these transfers will be automatically
-# retried in the future. I am holding off on this step until I devise
-# a long term plan for the tool's logging and output format...
+
 
 parser = argparse.ArgumentParser(description="Python tool for auditing Automation-Tool's database and making sure AIP is stored and tracked in Binder")
 parser.add_argument('-i', '--input', type=str, help='sqlite database to read')

@@ -3,6 +3,10 @@
 import argparse, os, shutil, bagit
 from hurry.filesize import size
 
+# In testing our workflows, we often need sample data.
+# This script is used for generating N number of directories, containing X number of files, of Y size.
+# It was written specifically for testing DPX ingest automation workflows. 
+
 parser = argparse.ArgumentParser(description="script for making a bunch of directories with a bunch of files in them")
 parser.add_argument('-t', '--target', type=str, required=True, help='where to put the test data')
 parser.add_argument('-r', '--reels', type=int, required=True, help='how many "reels" to make')

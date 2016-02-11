@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# new and improved version of automation-monitor
+
 
 #### portrait
 tmux new-session -d -s foo 'htop'

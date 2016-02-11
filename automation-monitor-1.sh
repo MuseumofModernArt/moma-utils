@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# creates a tmux layout for monitoring MoMA's automated ingest in Archivematica
+
 tmux new-session -d -s foo 'htop'
 tmux rename-window 'Foo'
 tmux select-window -t foo:0

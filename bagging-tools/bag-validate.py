@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-# provides directory named according to MoMA DRMC standards
-
 import argparse, bagit
 from pyfiglet import Figlet
 

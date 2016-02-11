@@ -5,7 +5,7 @@ import bagit, datetime, time, argparse, os, sys, subprocess, filecmp, hashlib, t
 epoch = time.time()
 timestamp = datetime.datetime.fromtimestamp(epoch).strftime('%H:%M:%S')
 
-parser = argparse.ArgumentParser(description="Python tool for ingest from shuttle hard drives at MoMA")
+parser = argparse.ArgumentParser(description="Tool for acquiring / bagging materials at MoMA")
 parser.add_argument('-i', '--input', type=str, required=True, help='The full path to the materials on the shuttle drive you wish to transfer.')
 parser.add_argument('-id', '--objectid', type=str, required=True, help='objectid of the work.')
 parser.add_argument('-n', '--name', type=str, help='Name of the person operating the script. This ends up the Bag metadata')

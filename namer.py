@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 
-# provides directory named according to MoMA DRMC standards
+# CLI interface for providing directory name according to MoMA DRMC naming convention
 
 import argparse, sys, json, urllib2, xerox
-
 
 parser = argparse.ArgumentParser(description="Python tool for getting the properly formated directory name for the DRMC")
 parser.add_argument('-id', '--objectid', type=str, help='objectid of the work.')
