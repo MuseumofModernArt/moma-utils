@@ -5,7 +5,7 @@
 tmux new-session -d -s vert 'htop'
 tmux rename-window 'vert'
 tmux select-window -t vert:0
-tmux split-window -v "watch --color 'bash tail1.sh'"
+tmux split-window -v "watch --color --no-title 'bash tail1.sh'"
 
 tmux resize-pane -U 20
 
