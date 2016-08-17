@@ -5,7 +5,7 @@
 tmux new-session -d -s vert 'htop'
 tmux rename-window 'vert'
 tmux select-window -t vert:0
-tmux split-window -v "watch 'bash tail1.sh'"
+tmux split-window -v "watch --color 'bash tail1.sh'"
 
 tmux split-window -v "watch --color -n 1 "echo '\033[32mVNX unbaged >>>>>>>>>>>>>>>>>>>>\033[0m' && tail /var/log/archivematica/automate-transfer.log""
 
